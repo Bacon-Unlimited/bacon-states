@@ -22,11 +22,12 @@
 # to the master (it gets interrupted by the install restarting it and doesn't 
 # know it needs to send back job data any more).
 
-{% if grains['saltversion']|float < 3002.6 %}
+{% set target_salt_version = "3002.6" %}
+{% if salt['pkg.compare_versions'](grains['saltversion'], "<", target_salt_version) %}
 
 Upgrade_Salt_Minion:
   cmd.script:
-    - source: https://repo.saltproject.io/windows/Salt-Minion-3002.6-Py3-AMD64-Setup.exe
+    - source: https://repo.saltproject.io/windows/Salt-Minion-{{ target_salt_version }}-Py3-AMD64-Setup.exe
     - args: /S
 
 {%- endif %}
