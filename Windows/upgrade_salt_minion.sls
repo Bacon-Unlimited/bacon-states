@@ -59,12 +59,14 @@ Upgrade_Salt_Minion:
     - require:
       - file: Download_Salt_Installer
 
-{%- endif %}
-
-{% if salt['pkg.compare_versions'](grains['saltversion'], ">=", target_salt_version) %}
+{%- else %}
 
 Remove_Old_Salt_Installer:
   file.absent:
     - name: {{ local_file }}
+
+Salt minion already upgraded:
+  test.nop:
+    - name: Salt minion version is already at or later than target version of {{ target_salt_version }} - no upgrade needed.
 
 {%- endif %}

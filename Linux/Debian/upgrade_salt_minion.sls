@@ -20,14 +20,14 @@
 # This state updates the minion on Debian family OSes.
 # It first checks if the minion version is at or above the currently set target version.
 # It then ensures the latest Salt repo is installed and then updates the minion.
-# Finally, it restarts the minion service in the background.
+# The service restarts automatically after the package is upgraded.
 
 {% set target_salt_version = "3002.6" %}
 
 {% if grains['saltversioninfo'] < target_salt_version.split('.')|map('int')|list %}
 
 {%- if grains['os'] == 'Ubuntu' %}
-{%- set salt_repo_url = "http://repo.saltproject.io/py3/ubuntu/" ~ grains['osrelease'] ~ "/amd64/latest" %}
+{%- set salt_repo_url = "https://repo.saltproject.io/py3/ubuntu/" ~ grains['osrelease'] ~ "/amd64/latest" %}
 {%- else %}
 {%- set salt_repo_url = "https://repo.saltproject.io/py3/debian/" ~ grains['osmajorrelease'] ~ "/amd64/latest" %}
 {%- endif %}
@@ -40,52 +40,18 @@ Install SaltStack repo:
     - key_url: {{ salt_repo_url }}/SALTSTACK-GPG-KEY.pub
     - clean_file: True
 
-Disable starting services:
-  file.managed:
-    - name: /usr/sbin/policy-rc.d
-    - user: root
-    - group: root
-    - mode: 0755
-    - contents:
-      - '#!/bin/sh'
-      - exit 101
-    # do not touch if already exists
-    - replace: False
-    - prereq:
-      - pkg: Upgrade Salt Minion
-
-Upgrade Salt Minion:
-  pkg.installed:
-    - name: salt-minion
-    - version: latest
-    - order: last
+Upgrade_Salt_Minion:
+  cmd.run:
+    - name: apt -y update && apt -y upgrade salt-minion
+    - bg: True
     - require:
       - pkgrepo: Install SaltStack repo
-
-Enable Salt Minion:
-  service.enabled:
-    - name: salt-minion
-    - require:
-      - pkg: Upgrade Salt Minion
-
-Enable starting services:
-  file.absent:
-    - name: /usr/sbin/policy-rc.d
-    - onchanges:
-      - pkg: Upgrade Salt Minion
-
-Restart Salt Minion:
-  cmd.run:
-    - name: 'salt-call service.restart salt-minion'
-    - bg: True
-    - onchanges:
-      - pkg: Upgrade Salt Minion
 
 {%- else %}
 
 Salt minion already upgraded:
   test.nop:
-    - name: Salt minion version is already at or later than target version. No upgrade needed.
+    - name: Salt minion version is already at or later than target version of {{ target_salt_version }} - no upgrade needed.
 
 {%- endif %}
 

@@ -48,7 +48,7 @@ Upgrade_Salt_Minion:
 
 Salt minion already upgraded:
   test.nop:
-    - name: Salt minion version is already at or later than target version. No upgrade needed.
+    - name: Salt minion version is already at or later than target version of {{ target_salt_version }} - no upgrade needed.
 
 {%- endif %}
 
