@@ -39,7 +39,7 @@ Install SaltStack repo:
 # the background instead of as a state.
 Upgrade_Salt_Minion:
   cmd.run:
-    - name: yum -y update salt-minion  
+    - name: yum -y update salt-minion
     - bg: True
     - require:
       - pkgrepo: Install SaltStack repo

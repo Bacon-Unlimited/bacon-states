@@ -17,33 +17,14 @@
 #  from Bacon Unlimited.
 ################################################################################
 
-# This state shows two approaches to upgrading the Salt Minion.
-# The first one works, but the minion will never return its job data back
-# to the master (it gets interrupted by the install restarting it and doesn't 
-# know it needs to send back job data any more).
-
-{% set target_salt_version = "3002.6" %}
-{% if salt['pkg.compare_versions'](grains['saltversion'], "<", target_salt_version) %}
-
-Upgrade_Salt_Minion:
-  cmd.script:
-    - source: https://repo.saltproject.io/windows/Salt-Minion-{{ target_salt_version }}-Py3-AMD64-Setup.exe
-    - args: /S
-
-{%- endif %}
-
-################################################################################
-
-# This example is more complicated, but the minion will return the job data
-# back to the master and log the fact that it successfully downloaded and at
-# least initiated the installation.
-# It's also fully templated example so you only need to tweak a version number at the top.
+# This state shows how to upgrade the Salt minion on Windows.
+# It's fully templated example so you only need to tweak a version number at the top.
 
 {% set target_salt_version = "3002.6" %}
 
 {% set local_file = 'C:\\temp\\SaltInstall_{}.exe'.format(target_salt_version) %}
 
-{% if salt['pkg.compare_versions'](grains['saltversion'], "<", target_salt_version) %}
+{% if grains['saltversioninfo'] < target_salt_version.split('.')|map('int')|list %}
 
 Download_Salt_Installer:
   file.managed:
