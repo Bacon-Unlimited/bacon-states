@@ -17,12 +17,11 @@
 #  from Bacon Unlimited.
 ################################################################################
 
-# This state uses local group policy to disable write access to removable drives (USB)
-# on Windows machines.
-Disable_USB_write_access:
-  # See the documentation for the lgpo state module here:
-  # https://docs.saltproject.io/en/latest/ref/states/all/salt.states.win_lgpo.html
-  lgpo.set:
-    - name: "System\\Removable Storage Access\\Removable Disks: Deny write access"
-    - setting: Enabled
-    - policy_class: Machine # Other options are User or Both
+# This state disables wireless on Windows by disabling the WLAN AutoConfig service.
+Disable_wireless:
+  # service.dead will make sure the service isn't running, and the enable parameter
+  # allows us to make sure it's also disabled by passing False.
+  # See documentation:  https://docs.saltproject.io/en/latest/ref/states/all/salt.states.service.html#salt.states.service.dead
+  service.dead:
+    - name: WlanSvc
+    - enable: False
