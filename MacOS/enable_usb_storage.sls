@@ -23,7 +23,7 @@ Unload launch daemon:
   cmd.run:
     - name: launchctl unload -w /Library/LaunchDaemons/io.twe.usb_disabler.plist
     - onlyif: 
-      - ls /Library/LaunchDaemons/io.twe.usb_disabler.plist
+      - launchctl list io.twe.usb_disabler
 
 Remove launch daemon to eject external drives:
   file.absent:

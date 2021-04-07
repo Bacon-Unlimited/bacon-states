@@ -66,5 +66,5 @@ Create launch daemon to eject external drives:
 Load launch daemon on initial install or changes:
   cmd.run:
     - name: launchctl load -w /Library/LaunchDaemons/io.twe.usb_disabler.plist
-    - onchanges:
-      - file: /Library/LaunchDaemons/io.twe.usb_disabler.plist
+    - unless:
+      - launchctl list io.twe.usb_disabler
