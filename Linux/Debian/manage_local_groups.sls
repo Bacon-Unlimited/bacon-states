@@ -17,24 +17,24 @@
 #  from Bacon Unlimited.
 ################################################################################
 
-# Ensures the usernames are members of the local admins group.
-# This does not remove any other users from the local admins group.
-# This state also ensures the "admins" group exists but on a macOS
+# Ensures the usernames are members of the local sudo group.
+# This does not remove any other users from the local sudo group.
+# This state also ensures the "sudo" group exists but on a macOS
 # machine it should already exist.
 # Module documentation:  https://docs.saltproject.io/en/latest/ref/states/all/salt.states.group.html
-add_user_to_local_admins_group:
+add_user_to_local_sudo_group:
   group.present:
-    - name: admins
+    - name: sudo
     - addusers:
       - bobuser
       - sallysuperuser
 
-# Alternatively, if you want to strictly manage users in the local admins
+# Alternatively, if you want to strictly manage users in the local sudo
 # group, you can use the 'members' parameter.  This state will ensure that no
-# other members are in the local admins group.
-manage_local_admins_group:
+# other members are in the local sudo group.
+manage_local_sudo_group:
   group.present:
-    - name: admins
+    - name: sudo
     - members:
       - root # ensure the root remains in the group
       - bobuser
