@@ -18,8 +18,9 @@
 ################################################################################
 
 # This state disables Bluetooth on Debian/Ubuntu.
-rfkill:
-  pkg.installed
+Ensure rfkill is installed to disable Bluetooth:
+  pkg.installed:
+    - name: rfkill
 
 Disable Bluetooth:
   cmd.run:
@@ -27,4 +28,4 @@ Disable Bluetooth:
     - unless:
       - rfkill bluetooth --output SOFT | grep blocked
     - require:
-      - pkg: rfkill
+      - pkg: Ensure rfkill is installed to disable Bluetooth

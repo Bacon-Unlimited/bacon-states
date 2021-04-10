@@ -18,8 +18,9 @@
 ################################################################################
 
 # This state disables Wi-Fi on Debian/Ubuntu.
-rfkill:
-  pkg.installed
+Ensure rfkill is installed to disable Wi-Fi:
+  pkg.installed:
+    - name: rfkill
 
 Disable Wi-Fi:
   cmd.run:
@@ -27,4 +28,4 @@ Disable Wi-Fi:
     - unless:
       - rfkill wifi --output SOFT | grep blocked
     - require:
-      - pkg: rfkill
+      - pkg: Ensure rfkill is installed to disable Wi-Fi

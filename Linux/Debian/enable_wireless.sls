@@ -18,8 +18,9 @@
 ################################################################################
 
 # This state enables Wi-Fi on Debian/Ubuntu.
-rfkill:
-  pkg.installed
+Ensure rfkill is installed to enable Wi-Fi:
+  pkg.installed:
+    - name: rfkill
 
 Enable Wi-Fi:
   cmd.run:
@@ -27,4 +28,4 @@ Enable Wi-Fi:
     - unless:
       - rfkill wifi --output SOFT | grep unblocked
     - require:
-      - pkg: rfkill
+      - pkg: Ensure rfkill is installed to enable Wi-Fi

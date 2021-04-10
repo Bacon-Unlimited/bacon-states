@@ -18,8 +18,9 @@
 ################################################################################
 
 # This state enables Bluetooth on Debian/Ubuntu.
-rfkill:
-  pkg.installed
+Ensure rfkill is installed to enable Bluetooth:
+  pkg.installed:
+    - name: rfkill
 
 Enable Bluetooth:
   cmd.run:
@@ -27,4 +28,4 @@ Enable Bluetooth:
     - unless:
       - rfkill bluetooth --output SOFT | grep unblocked
     - require:
-      - pkg: rfkill
+      - pkg: Ensure rfkill is installed to enable Bluetooth
