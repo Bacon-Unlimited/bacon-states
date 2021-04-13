@@ -1,0 +1,23 @@
+State,MacOS,Debian,CentOS,Win,,
+,,,,,As Registry,As GPO
+disable file shares,y,,,,,
+disable usb storage,y,,,,,
+disable wireless,y,y,y,y,,
+enable network file shares,y,,,,,
+enable usb storage,y,,,,,
+enable wireless,y,,,y,,
+manage local groups,y,y,y,,,
+manage minion salt config,y,,,y,,
+upgrade salt minions,y,y,y,y,,
+user absent,y,,,y,,
+disable bluetooth,,y,y,y,,
+enable bluetooth,,y,y,y,,
+Add AD group to local admin,,,,y,,
+Disable All Access All Removable Storage,,,,-,y,y
+Disable Mounting Shared Drives,,,,-,y,y
+Disable Write to WPD Devices,,,,-,y,y
+Disable Write to CD/DVD,,,,-,y,y
+Disable write to Floppy Drives,,,,-,y,y
+Disable Write to Removable Disks,,,,-,y,y
+Disable Write to Tape Drives,,,,-,y,y
+Join to Domain,,,,y,,
