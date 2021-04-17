@@ -27,10 +27,14 @@
 {% if grains['saltversioninfo'] < target_salt_version.split('.')|map('int')|list %}
 
 {%- if grains['os'] == 'Ubuntu' %}
-{%- set salt_repo_url = "https://repo.saltproject.io/py3/ubuntu/" ~ grains['osrelease'] ~ "/amd64/latest" %}
+{%- set salt_repo_url = "https://repo.saltproject.io/py3/ubuntu/" ~ grains['osrelease'] ~ "/amd64/archive/" ~ target_salt_version %}
 {%- else %}
-{%- set salt_repo_url = "https://repo.saltproject.io/py3/debian/" ~ grains['osmajorrelease'] ~ "/amd64/latest" %}
+{%- set salt_repo_url = "https://repo.saltproject.io/py3/debian/" ~ grains['osmajorrelease'] ~ "/amd64/archive/" ~ target_salt_version %}
 {%- endif %}
+
+Delete old Salt repos:
+  cmd.run:
+    - name: find /etc/apt/sources.list.d/ -type f -name "salt*" -delete
 
 Install SaltStack repo:
   pkgrepo.managed:
@@ -42,7 +46,7 @@ Install SaltStack repo:
 
 Upgrade_Salt_Minion:
   cmd.run:
-    - name: apt -y update && apt -y upgrade salt-minion
+    - name: apt -y update && apt -y install salt-minion
     - bg: True
     - require:
       - pkgrepo: Install SaltStack repo
@@ -54,4 +58,3 @@ Salt minion already upgraded:
     - name: Salt minion version is already at or later than target version of {{ target_salt_version }} - no upgrade needed.
 
 {%- endif %}
-
