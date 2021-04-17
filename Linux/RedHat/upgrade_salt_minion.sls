@@ -26,14 +26,18 @@
 
 {% if grains['saltversioninfo'] < target_salt_version.split('.')|map('int')|list %}
 
+Delete old Salt repos:
+  cmd.run:
+    - name: find /etc/yum.repos.d/ -type f -name "salt*" -delete
+
 Install SaltStack repo:
   pkgrepo.managed:
     - name: salt
     - humanname: SaltStack repo for RHEL/CentOS $releasever
-    - baseurl: https://repo.saltproject.io/py3/redhat/$releasever/$basearch/latest
+    - baseurl: https://repo.saltproject.io/py3/redhat/$releasever/$basearch/archive/{{ target_salt_version }}
     - enabled: 1
     - gpgcheck: 1
-    - gpgkey: https://repo.saltproject.io/py3/redhat/$releasever/$basearch/latest/SALTSTACK-GPG-KEY.pub
+    - gpgkey: https://repo.saltproject.io/py3/redhat/$releasever/$basearch/archive/{{ target_salt_version }}/SALTSTACK-GPG-KEY.pub
 
 # RedHat Salt package will restart service, so we need to run the command in
 # the background instead of as a state.
@@ -51,4 +55,3 @@ Salt minion already upgraded:
     - name: Salt minion version is already at or later than target version of {{ target_salt_version }} - no upgrade needed.
 
 {%- endif %}
-
