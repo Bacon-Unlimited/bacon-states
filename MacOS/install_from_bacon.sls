@@ -1,3 +1,4 @@
+##os: macos
 manage_macos_firefox_from_bacon:
   file.managed:
     - source: salt://packages/Windows/FireFox.pkg
