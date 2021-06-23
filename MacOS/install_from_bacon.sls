@@ -9,5 +9,4 @@ manage_macos_firefox_from_bacon:
     
 /tmp/salt/pks/FireFox_20210419.pkg:
   macpackage.installed:
-    - target: /Applications/Firefox.app
     - allow_untrusted: True
