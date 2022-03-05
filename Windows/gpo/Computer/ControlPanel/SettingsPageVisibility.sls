@@ -1,10 +1,5 @@
-# this one is apparently valid for Both (User/Machine)
-# don't quite understand what it does
-#  but help has interesting info
-# maybe we end up parsing 
-
-SettingsPageVisibility:
+Settings Page Visibility:
   lgpo.set:
     - setting:
-        SettingsPageVisibilityBox: "hide:phone"
+        SettingsPageVisibilityBox: "hide:bluetooth"
     - policy_class: Machine

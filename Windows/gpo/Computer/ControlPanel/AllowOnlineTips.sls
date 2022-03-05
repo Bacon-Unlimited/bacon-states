@@ -1,4 +1,4 @@
-AllowOnlineTips:
+Allow Online Tips:
   lgpo.set:
     - setting:
         CheckBox_AllowOnlineTips: True
