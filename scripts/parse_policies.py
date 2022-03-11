@@ -186,7 +186,7 @@ def generate_sls(policies, output_dir):
                         "setting": {
                             element["attrib"]["id"]: f"<{element['type']}>"
                             for element in policy["elements"]
-                        }
+                        } if policy["elements"] else "Enabled"
                     },
                     {"policy_class": policy["class"]},
                 ]
