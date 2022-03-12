@@ -15,7 +15,7 @@ recovering_parser = etree.XMLParser(recover=True)
 log = logging.getLogger("parse_policies")
 log.setLevel(logging.DEBUG)
 
-fmt = Formatter('%(levelname)s - %(asctime)s - %(message)s')
+fmt = Formatter("%(levelname)s - %(asctime)s - %(message)s")
 
 sh = StreamHandler()
 sh.setFormatter(fmt)
@@ -27,6 +27,7 @@ fh.setLevel(logging.DEBUG)
 
 log.addHandler(sh)
 log.addHandler(fh)
+
 
 def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="en-US"):
     """
@@ -103,22 +104,48 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 if policy_name:
                     policy_info["name"] = policy_name[0].text
                 else:
-                    log.warning(f"policy name not found for {policy_info['id']}")
-                    log.debug(f"trying known special cases ...")
-                    if (
-                        policy_info["id"]
-                        == "AppCompatTurnOffProgramCompatibilityAssistant_1"
-                        or policy_info["id"]
-                        == "AppCompatTurnOffProgramCompatibilityAssistant_2"
-                    ):
-                        policy_id = policy_info["id"].split("_")[0]
-                        policy_name = list(
-                            filter(
-                                lambda string: string.attrib["id"] == policy_id,
-                                string_table,
-                            )
+                    log.debug(f"searching for {policy_info['id']}_Name ...")
+                    policy_name = list(
+                        filter(
+                            lambda string: string.attrib["id"]
+                            == policy_info["id"] + "_Name",
+                            string_table,
                         )
+                    )
+
+                    if policy_name:
+                        log.info(f"{policy_info['id']}_Name found")
                         policy_info["name"] = policy_name[0].text
+                    else:
+                        policy_id_split = policy_info["id"].split("_")
+
+                        try:
+                            num = int(policy_id_split[-1])
+                        except ValueError:
+                            num = None
+
+                        if num is not None:
+
+                            policy_id = policy_info["id"].split(f"_{num}")[0]
+                            log.debug(
+                                f"Using policy reference id {policy_id} for {policy_info['id']}"
+                            )
+                            policy_name = list(
+                                filter(
+                                    lambda string: string.attrib["id"] == policy_id,
+                                    string_table,
+                                )
+                            )
+                            if policy_name:
+                                policy_info["name"] = policy_name[0].text
+                            else:
+                                log.warning(
+                                    f"policy name not found for {policy_info['id']}"
+                                )
+                        else:
+                            log.warning(
+                                f"policy name not found for {policy_info['id']}"
+                            )
 
                 policy_help = list(
                     filter(
@@ -144,7 +171,21 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                         policy_info["help"] = policy_help[0].text
                         log.debug("_explain found")
                     else:
-                        log.debug("No _Help or _explain found")
+                        log.debug("No _Help or _explain found, searching for _Explain")
+                        policy_help = list(
+                            filter(
+                                lambda string: string.attrib["id"]
+                                == f"{policy_info['id']}_Explain",
+                                string_table,
+                            )
+                        )
+                        if policy_help:
+                            policy_info["help"] = policy_help[0].text
+                            log.debug("_Explain found")
+                        else:
+                            log.info(
+                                f"No _Help, _explain, or _Explain found for {policy_info['id']}"
+                            )
 
             elements = [
                 child
@@ -166,7 +207,19 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
             else:
                 log.info("No elements found.")
 
+            supported_on = [
+                child
+                for child in policy
+                if child.tag is not Comment and child.tag.endswith("supportedOn")
+            ]
+            if supported_on:
+                policy_info["supportedOn"] = supported_on[0].attrib["ref"]
+            else:
+                log.warning(f"supportedOn not found for {policy_info['id']} policy")
+
             all_policies.append(policy_info)
+    with open("all_policies.json", "w") as json_file:
+        json.dump(all_policies, json_file, indent=2)
     return all_policies
 
 
@@ -179,55 +232,101 @@ def generate_sls(policies, output_dir):
 
     for policy in policies:
         log.info(f"Generating sls for {policy['id']} policy")
-        sls = {
-            policy.get("name", policy["id"]): {
-                "lgpo.set": [
-                    {
-                        "setting": {
-                            element["attrib"]["id"]: f"<{element['type']}>"
-                            for element in policy["elements"]
-                        } if policy["elements"] else "Enabled"
-                    },
-                    {"policy_class": policy["class"]},
-                ]
+        if policy["class"] in ["User", "Machine"]:
+            sls = {
+                policy.get("name", policy["id"]): {
+                    "lgpo.set": [
+                        {
+                            "setting": {
+                                element["attrib"][
+                                    "id"
+                                ]: f"{element['type']}-placeholder"
+                                if not element["type"] == "list"
+                                else ["placeholder1", "placeholder2"]
+                                for element in policy["elements"]
+                            }
+                            if policy["elements"]
+                            else "Enabled"
+                        },
+                        {"policy_class": policy["class"]},
+                    ]
+                }
             }
-        }
-        if policy["class"] == "Machine":
-            sub_dir = "Computer"
-        elif policy["class"] == "User":
-            sub_dir = "User"
+            sub_dir = "Computer" if policy["class"] == "Machine" else "User"
+            sub_dir_sls = [(sub_dir, sls)]
+        elif policy["class"] == "Both":
+            sls_machine = {
+                policy.get("name", policy["id"]): {
+                    "lgpo.set": [
+                        {
+                            "setting": {
+                                element["attrib"][
+                                    "id"
+                                ]: f"{element['type']}-placeholder"
+                                if not element["type"] == "list"
+                                else ["placeholder1", "placeholder2"]
+                                for element in policy["elements"]
+                            }
+                            if policy["elements"]
+                            else "Enabled"
+                        },
+                        {"policy_class": "Machine"},
+                    ]
+                }
+            }
+            sls_user = {
+                policy.get("name", policy["id"]): {
+                    "lgpo.set": [
+                        {
+                            "setting": {
+                                element["attrib"][
+                                    "id"
+                                ]: f"{element['type']}-placeholder"
+                                if not element["type"] == "list"
+                                else ["placeholder1", "placeholder2"]
+                                for element in policy["elements"]
+                            }
+                            if policy["elements"]
+                            else "Enabled"
+                        },
+                        {"policy_class": "User"},
+                    ]
+                }
+            }
+            sub_dir_sls = [("Computer", sls_machine), ("User", sls_user)]
         else:
-            log.warning(f"unusual policy class: {policy['class']}")
-            sub_dir = policy["class"]
+            log.warning(f"unusual policy class: {policy['class']}. Skipping...")
+            continue
 
-        if not os.path.exists(os.path.join(output_dir, sub_dir)):
-            os.mkdir(os.path.join(output_dir, sub_dir))
+        for sdir_sls in sub_dir_sls:
+            if not os.path.exists(os.path.join(output_dir, sdir_sls[0])):
+                os.mkdir(os.path.join(output_dir, sdir_sls[0]))
 
-        with open(
-            os.path.join(output_dir, sub_dir, policy["id"] + ".sls"), "w"
-        ) as sls_file:
-            yaml.dump(sls, sls_file)
-
-        if policy["help"]:
-            # write help section
             with open(
-                os.path.join(output_dir, sub_dir, policy["id"] + ".sls"), "r+", encoding="utf-8"
+                os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"), "w"
             ) as sls_file:
-                sls_contents = sls_file.read()
-                sls_file.seek(0)
-                help_split = policy["help"].split("\n")
-                if help_split:
-                    comment_help_split = []
-                    for line in help_split:
-                        comment_help_split.append(f"# {line}")
+                yaml.dump(sdir_sls[1], sls_file)
+
+            if policy["help"] or policy["supportedOn"]:
+                with open(
+                    os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"),
+                    "r+",
+                    encoding="utf-8",
+                ) as sls_file:
+                    sls_contents = sls_file.read()
+                    sls_file.seek(0)
                     yaml_help = ""
-                    for line in comment_help_split:
-                        yaml_help += line + "\n"
-                    try:
+                    if policy["supportedOn"]:
+                        yaml_help += f"# {policy['supportedOn']}\n#\n"
+                    help_split = policy["help"].split("\n")
+                    if help_split:
+                        comment_help_split = []
+                        for line in help_split:
+                            comment_help_split.append(f"# {line}")
+
+                        for line in comment_help_split:
+                            yaml_help += line + "\n"
                         sls_file.write(yaml_help + sls_contents)
-                    except UnicodeEncodeError as e:
-                        import ipdb; ipdb.set_trace()
-                        pass
 
 
 def main(
