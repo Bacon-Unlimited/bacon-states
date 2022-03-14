@@ -19,7 +19,7 @@ fmt = Formatter("%(levelname)s - %(asctime)s - %(message)s")
 
 sh = StreamHandler()
 sh.setFormatter(fmt)
-sh.setLevel(logging.WARNING)
+sh.setLevel(logging.INFO)
 
 fh = FileHandler("parse_policies.log")
 fh.setFormatter(fmt)
@@ -33,13 +33,13 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
     """
     Parse policy info from admx/adml files
     """
-    log.info(f"Parsing policies in {policy_path} ...")
+    log.debug(f"Parsing policies in {policy_path} ...")
     all_policies = []
 
     admx_files = [f for f in os.listdir(policy_path) if f.endswith(".admx")]
 
     for admx_ in admx_files:
-        log.info(f"Scanning {admx_} ...")
+        log.debug(f"Scanning {admx_} ...")
         try:
             admx_tree = etree.parse(
                 os.path.join(policy_path, admx_), parser=recovering_parser
@@ -67,19 +67,20 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
         if policies:
             policies = policies[0]
         else:
-            log.error(f"No policies found for {admx_}. Skipping...")
+            log.warning(f"No policies found in {admx_}")
             continue
         for policy in policies:
             if policy.tag is Comment:
                 continue
             policy_info = {
+                "attrib": policy.attrib,
                 "id": policy.attrib["name"],
                 "class": policy.attrib["class"],
                 "elements": [],
                 "help": "",
             }
 
-            log.info(f"Extracting info from {policy_info['id']} policy ...")
+            log.debug(f"Extracting info from {policy_info['id']} policy ...")
 
             if adml_tree:
                 resources = [
@@ -95,97 +96,36 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 string_table = [
                     elem for elem in string_table if elem.tag is not Comment
                 ]
+                display_name_ref = policy_info["attrib"]["displayName"].split(".")[-1][:-1]
                 policy_name = list(
                     filter(
-                        lambda string: string.attrib["id"] == policy_info["id"],
+                        lambda string: string.attrib["id"] == display_name_ref,
                         string_table,
                     )
                 )
                 if policy_name:
                     policy_info["name"] = policy_name[0].text
                 else:
-                    log.debug(f"searching for {policy_info['id']}_Name ...")
-                    policy_name = list(
-                        filter(
-                            lambda string: string.attrib["id"]
-                            == policy_info["id"] + "_Name",
-                            string_table,
-                        )
+                    log.warning(
+                        f"policy name not found for {policy_info['id']}"
                     )
 
-                    if policy_name:
-                        log.info(f"{policy_info['id']}_Name found")
-                        policy_info["name"] = policy_name[0].text
-                    else:
-                        policy_id_split = policy_info["id"].split("_")
-
-                        try:
-                            num = int(policy_id_split[-1])
-                        except ValueError:
-                            num = None
-
-                        if num is not None:
-
-                            policy_id = policy_info["id"].split(f"_{num}")[0]
-                            log.debug(
-                                f"Using policy reference id {policy_id} for {policy_info['id']}"
-                            )
-                            policy_name = list(
-                                filter(
-                                    lambda string: string.attrib["id"] == policy_id,
-                                    string_table,
-                                )
-                            )
-                            if policy_name:
-                                policy_info["name"] = policy_name[0].text
-                            else:
-                                log.warning(
-                                    f"policy name not found for {policy_info['id']}"
-                                )
-                        else:
-                            log.warning(
-                                f"policy name not found for {policy_info['id']}"
-                            )
-
+                explain_text_ref = policy_info["attrib"]["explainText"].split(".")[-1][:-1]
                 policy_help = list(
                     filter(
                         lambda string: string.attrib["id"]
-                        == f"{policy_info['id']}_Help",
+                        == explain_text_ref,
                         string_table,
                     )
                 )
                 if policy_help:
-                    log.debug("Found _Help")
+                    log.debug(f"Found help for {policy_info['id']}")
                     policy_help = policy_help[0]
                     policy_info["help"] = policy_help.text
                 else:
-                    log.debug("Help not found, searching for _explain")
-                    policy_help = list(
-                        filter(
-                            lambda string: string.attrib["id"]
-                            == f"{policy_info['id']}_explain",
-                            string_table,
-                        )
+                    log.info(
+                        f"No Help found for {policy_info['id']}"
                     )
-                    if policy_help:
-                        policy_info["help"] = policy_help[0].text
-                        log.debug("_explain found")
-                    else:
-                        log.debug("No _Help or _explain found, searching for _Explain")
-                        policy_help = list(
-                            filter(
-                                lambda string: string.attrib["id"]
-                                == f"{policy_info['id']}_Explain",
-                                string_table,
-                            )
-                        )
-                        if policy_help:
-                            policy_info["help"] = policy_help[0].text
-                            log.debug("_Explain found")
-                        else:
-                            log.info(
-                                f"No _Help, _explain, or _Explain found for {policy_info['id']}"
-                            )
 
             elements = [
                 child
@@ -194,8 +134,8 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
             ]
             if elements:
                 elements = elements[0]
-                log.info("Scanning elements ...")
-                log.info(f"{len(elements)} found.")
+                log.debug("Scanning elements ...")
+                log.debug(f"{len(elements)} found.")
                 for elem in elements:
                     if elem.tag is Comment:
                         continue
@@ -205,7 +145,7 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                     }
                     policy_info["elements"].append(element_info)
             else:
-                log.info("No elements found.")
+                log.debug("No elements found.")
 
             supported_on = [
                 child
@@ -218,8 +158,6 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 log.warning(f"supportedOn not found for {policy_info['id']} policy")
 
             all_policies.append(policy_info)
-    with open("all_policies.json", "w") as json_file:
-        json.dump(all_policies, json_file, indent=2)
     return all_policies
 
 
@@ -231,7 +169,7 @@ def generate_sls(policies, output_dir):
         os.makedirs(output_dir)
 
     for policy in policies:
-        log.info(f"Generating sls for {policy['id']} policy")
+        log.debug(f"Generating sls for {policy['id']} policy")
         if policy["class"] in ["User", "Machine"]:
             sls = {
                 policy.get("name", policy["id"]): {
