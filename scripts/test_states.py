@@ -11,9 +11,10 @@ def test_states():
     This function might take a while.
     Therefore, use `pytest -s` to see progress print statements.
     """
+    print("\n")
     walk = os.walk(LGPO_STATES_PATH)
     for root, subdirs, files in walk:
-        for idx, file_ in enumerate(files):
+        for idx, file_ in enumerate(files, 1):
             print(f"Testing file {idx}/{len(files)} in {root}: {file_}")
             sls = ".".join(
                 tuple(root.split(LGPO_STATES_PATH + "\\")[-1].split("\\"))
