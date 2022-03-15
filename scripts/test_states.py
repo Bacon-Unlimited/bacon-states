@@ -9,7 +9,7 @@ def test_states():
     for root, subdirs, files in walk:
         for file_ in files:
             sls = ".".join(
-                (root.split(LGPO_STATES_PATH + "\\")[-1].split("\\"),)
+                tuple(root.split(LGPO_STATES_PATH + "\\")[-1].split("\\"))
                 + (os.path.splitext(file_)[0],)
             )
             cmd = f"salt-call --local state.sls {sls} test=True"
