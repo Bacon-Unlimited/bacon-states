@@ -5,14 +5,21 @@ LGPO_STATES_PATH = "C:\\salt\\srv\\salt"
 
 
 def test_states():
+    """
+    Test all the states in LGPO_STATES_PATH
+
+    This function might take a while.
+    Therefore, use `pytest -s` to see progress print statements.
+    """
     walk = os.walk(LGPO_STATES_PATH)
     for root, subdirs, files in walk:
-        for file_ in files:
+        for idx, file_ in enumerate(files):
+            print(f"Testing file {idx}/{len(files)} in {root}: {file_}")
             sls = ".".join(
                 tuple(root.split(LGPO_STATES_PATH + "\\")[-1].split("\\"))
                 + (os.path.splitext(file_)[0],)
             )
-            cmd = f"salt-call --local state.sls {sls} test=True"
-            with Popen(cmd.split(), stdout=PIPE, stderr=PIPE) as proc:
+            cmd = f"C:\\salt\\salt-call.bat --local state.sls {sls} test=True"
+            with Popen(cmd.split(), stdout=PIPE, stderr=PIPE, shell=True) as proc:
                 retcode = proc.wait()
                 assert retcode == 0
