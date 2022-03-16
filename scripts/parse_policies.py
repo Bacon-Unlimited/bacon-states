@@ -174,6 +174,7 @@ def generate_sls(policies, output_dir):
             sls = {
                 policy.get("name", policy["id"]): {
                     "lgpo.set": [
+                        {"name": policy["id"]},
                         {
                             "setting": {
                                 element["attrib"][
@@ -196,6 +197,7 @@ def generate_sls(policies, output_dir):
             sls_machine = {
                 policy.get("name", policy["id"]): {
                     "lgpo.set": [
+                        {"name": policy["id"]},
                         {
                             "setting": {
                                 element["attrib"][
@@ -215,6 +217,7 @@ def generate_sls(policies, output_dir):
             sls_user = {
                 policy.get("name", policy["id"]): {
                     "lgpo.set": [
+                        {"name": policy["id"]},
                         {
                             "setting": {
                                 element["attrib"][
