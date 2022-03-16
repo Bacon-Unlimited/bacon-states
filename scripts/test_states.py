@@ -15,7 +15,7 @@ for root, subdirs, files in walk:
         )
         idx_states.append((idx, sls))
 
-@pytest.mark.parameterize("idx,state", idx_states)
+@pytest.mark.parametrize("idx,state", idx_states)
 def test_state(idx, state):
     cmd = f"C:\\salt\\salt-call.bat --local state.sls {state} test=True"
     with Popen(cmd.split(), stdout=PIPE, stderr=PIPE, shell=True) as proc:
