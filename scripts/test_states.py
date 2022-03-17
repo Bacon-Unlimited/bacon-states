@@ -24,6 +24,6 @@ def test_state(state):
         try:
             assert retcode == 0
         except AssertionError:
-            print(f"stdout:\n{stdout}\nstderr:\n{stderr}")
+            print(f"\nstdout:\n{stdout.decode('utf-8')}\nstderr:\n{stderr.decode('utf-8')}")
             print(f"retcode: {retcode}")
             raise AssertionError

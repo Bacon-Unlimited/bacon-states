@@ -59,6 +59,16 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
             log.error(f"adml not found at {adml_path}")
             adml_tree = None
 
+        categories = [
+            child
+            for child in admx_root
+            if child.tag is not Comment and child.tag.endswith("categories")
+        ]
+        if categories:
+            categories = categories[0]
+        else:
+            log.warning(f"No categories found in {admx_}")
+
         policies = [
             child
             for child in admx_root
@@ -78,6 +88,7 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 "class": policy.attrib["class"],
                 "elements": [],
                 "help": "",
+                "parent": "",
             }
 
             log.debug(f"Extracting info from {policy_info['id']} policy ...")
@@ -96,7 +107,9 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 string_table = [
                     elem for elem in string_table if elem.tag is not Comment
                 ]
-                display_name_ref = policy_info["attrib"]["displayName"].split(".")[-1][:-1]
+                display_name_ref = policy_info["attrib"]["displayName"].split(".")[-1][
+                    :-1
+                ]
                 policy_name = list(
                     filter(
                         lambda string: string.attrib["id"] == display_name_ref,
@@ -106,15 +119,14 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 if policy_name:
                     policy_info["name"] = policy_name[0].text
                 else:
-                    log.warning(
-                        f"policy name not found for {policy_info['id']}"
-                    )
+                    log.warning(f"policy name not found for {policy_info['id']}")
 
-                explain_text_ref = policy_info["attrib"]["explainText"].split(".")[-1][:-1]
+                explain_text_ref = policy_info["attrib"]["explainText"].split(".")[-1][
+                    :-1
+                ]
                 policy_help = list(
                     filter(
-                        lambda string: string.attrib["id"]
-                        == explain_text_ref,
+                        lambda string: string.attrib["id"] == explain_text_ref,
                         string_table,
                     )
                 )
@@ -123,9 +135,7 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                     policy_help = policy_help[0]
                     policy_info["help"] = policy_help.text
                 else:
-                    log.info(
-                        f"No Help found for {policy_info['id']}"
-                    )
+                    log.info(f"No Help found for {policy_info['id']}")
 
             elements = [
                 child
@@ -156,6 +166,17 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 policy_info["supportedOn"] = supported_on[0].attrib["ref"]
             else:
                 log.warning(f"supportedOn not found for {policy_info['id']} policy")
+
+            parent_category = [
+                child
+                for child in policy
+                if child.tag is not Comment and child.tag.endswith("parentCategory")
+            ]
+            if parent_category:
+                parent_category = parent_category[0].attrib["ref"]
+
+            else:
+                log.warning(f"parentCategory not found for {policy_info['id']} policy")
 
             all_policies.append(policy_info)
     return all_policies
@@ -251,8 +272,7 @@ def generate_sls(policies, output_dir):
             if policy["help"] or policy["supportedOn"]:
                 with open(
                     os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"),
-                    "r+",
-                    encoding="utf-8",
+                    "rb+"
                 ) as sls_file:
                     sls_contents = sls_file.read()
                     sls_file.seek(0)
@@ -267,7 +287,15 @@ def generate_sls(policies, output_dir):
 
                         for line in comment_help_split:
                             yaml_help += line + "\n"
-                        sls_file.write(yaml_help + sls_contents)
+                        #sls_file.write(yaml_help + sls_contents)
+                        sls_file.write(yaml_help.encode("utf-8"))
+                        sls_file.write(sls_contents)
+
+
+def generate_readme(output_dir):
+    with open(os.path.join(output_dir, "README.md")) as readme:
+        readme.write("| file | name | class |\n")
+        readme.write("| --- | --- | --- |\n")
 
 
 def main(
