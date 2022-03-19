@@ -15,16 +15,23 @@ for root, subdirs, files in walk:
         )
         states.append(sls)
 
+
 @pytest.mark.parametrize("state", states)
 def test_state(state):
-    cmd = f"C:\\salt\\salt-call.bat --local state.sls {state} test=True"
-    with Popen(cmd.split(), stdout=PIPE, stderr=PIPE, shell=True) as proc:
+    with Popen(
+        ["C:\\salt\\salt-call.bat", "--local", "state.sls", f'"{state}"', "test=True"],
+        stdout=PIPE,
+        stderr=PIPE,
+        shell=True,
+    ) as proc:
         stdout, stderr = proc.communicate()
         retcode = proc.wait()
         try:
             assert retcode == 0
         except AssertionError:
             print(f"Error while testing {state}")
-            print(f"\nstdout:\n{stdout.decode('utf-8')}\nstderr:\n{stderr.decode('utf-8')}")
+            print(
+                f"\nstdout:\n{stdout.decode('utf-8')}\nstderr:\n{stderr.decode('utf-8')}"
+            )
             print(f"retcode: {retcode}")
             raise AssertionError
