@@ -29,6 +29,63 @@ log.addHandler(sh)
 log.addHandler(fh)
 
 
+REF_LOOKUP = {
+    "windows": "Windows",
+    "logon": "WinLogon",
+    "devinst": "DeviceInstallation",
+    "sensors": "Sensors",
+    "mmc": "MMC",
+    "msched": "msched",
+    "wer": "ErrorReporting",
+    "terminalserver": "TerminalServer",
+    "backup": "WindowsBackup",
+    "inetres": "inetres",
+    "netcon": "NetworkConnections",
+}
+
+
+def _parse_admx_adml(
+    name, policy_path="C:\\Windows\\PolicyDefinitions", adml_language="en-US"
+):
+    """
+    Helper function
+    Parse the admx/adml pair for a given filename (without extension)
+    Returns (categories, string_table)
+    """
+    admx_tree = etree.parse(
+        os.path.join(policy_path, name + ".admx"), parser=recovering_parser
+    )
+    admx_root = admx_tree.getroot()
+
+    adml_path = os.path.join(policy_path, adml_language, name + ".adml")
+    adml_tree = etree.parse(adml_path, parser=recovering_parser)
+    adml_root = adml_tree.getroot()
+
+    categories = [
+        child
+        for child in admx_root
+        if child.tag is not Comment and child.tag.endswith("categories")
+    ]
+    if categories:
+        categories = categories[0]
+        categories = [child for child in categories if child.tag is not Comment]
+    else:
+        log.warning(f"No categories found in {name + '.admx'}")
+
+    resources = [
+        child
+        for child in adml_root
+        if child.tag is not Comment and child.tag.endswith("resources")
+    ][0]
+    string_table = [
+        child
+        for child in resources
+        if child.tag is not Comment and child.tag.endswith("stringTable")
+    ][0]
+    string_table = [elem for elem in string_table if elem.tag is not Comment]
+    return (categories, string_table)
+
+
 def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="en-US"):
     """
     Parse policy info from admx/adml files
@@ -39,7 +96,7 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
     admx_files = [f for f in os.listdir(policy_path) if f.endswith(".admx")]
 
     for admx_ in admx_files:
-        log.debug(f"Scanning {admx_} ...")
+        log.info(f"Scanning {admx_} ...")
         try:
             admx_tree = etree.parse(
                 os.path.join(policy_path, admx_), parser=recovering_parser
@@ -52,22 +109,8 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
         adml_path = os.path.join(
             policy_path, adml_language, os.path.splitext(admx_)[0] + ".adml"
         )
-        if os.path.exists(adml_path):
-            adml_tree = etree.parse(adml_path, parser=recovering_parser)
-            adml_root = adml_tree.getroot()
-        else:
-            log.error(f"adml not found at {adml_path}")
-            adml_tree = None
-
-        categories = [
-            child
-            for child in admx_root
-            if child.tag is not Comment and child.tag.endswith("categories")
-        ]
-        if categories:
-            categories = categories[0]
-        else:
-            log.warning(f"No categories found in {admx_}")
+        adml_tree = etree.parse(adml_path, parser=recovering_parser)
+        adml_root = adml_tree.getroot()
 
         policies = [
             child
@@ -79,63 +122,47 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
         else:
             log.warning(f"No policies found in {admx_}")
             continue
+
         for policy in policies:
+            current_scope = os.path.splitext(admx_)[0]
+            categories, string_table = _parse_admx_adml(current_scope)
             if policy.tag is Comment:
                 continue
             policy_info = {
-                "attrib": policy.attrib,
+                "attrib": dict(policy.attrib),
                 "id": policy.attrib["name"],
                 "class": policy.attrib["class"],
                 "elements": [],
                 "help": "",
-                "parent": "",
+                "path": "",
             }
+            log.info(f"Extracting info for {policy_info['id']} policy ...")
 
-            log.debug(f"Extracting info from {policy_info['id']} policy ...")
-
-            if adml_tree:
-                resources = [
-                    child
-                    for child in adml_root
-                    if child.tag is not Comment and child.tag.endswith("resources")
-                ][0]
-                string_table = [
-                    child
-                    for child in resources
-                    if child.tag is not Comment and child.tag.endswith("stringTable")
-                ][0]
-                string_table = [
-                    elem for elem in string_table if elem.tag is not Comment
-                ]
-                display_name_ref = policy_info["attrib"]["displayName"].split(".")[-1][
-                    :-1
-                ]
-                policy_name = list(
-                    filter(
-                        lambda string: string.attrib["id"] == display_name_ref,
-                        string_table,
-                    )
+            display_name_ref = policy_info["attrib"]["displayName"].split(".")[-1][:-1]
+            policy_name = list(
+                filter(
+                    lambda string: string.attrib["id"] == display_name_ref,
+                    string_table,
                 )
-                if policy_name:
-                    policy_info["name"] = policy_name[0].text
-                else:
-                    log.warning(f"policy name not found for {policy_info['id']}")
+            )
+            if policy_name:
+                policy_info["name"] = policy_name[0].text
+            else:
+                log.warning(f"policy name not found for {policy_info['id']}")
 
-                explain_text_ref = policy_info["attrib"]["explainText"].split(".")[-1][
-                    :-1
-                ]
-                policy_help = list(
-                    filter(
-                        lambda string: string.attrib["id"] == explain_text_ref,
-                        string_table,
-                    )
+            explain_text_ref = policy_info["attrib"]["explainText"].split(".")[-1][:-1]
+            policy_help = list(
+                filter(
+                    lambda string: string.attrib["id"] == explain_text_ref,
+                    string_table,
                 )
-                if policy_help:
-                    log.debug(f"Found help for {policy_info['id']}")
-                    policy_help = policy_help[0]
-                    policy_info["help"] = policy_help.text
-                else:
-                    log.info(f"No Help found for {policy_info['id']}")
+            )
+            if policy_help:
+                log.debug(f"Found help for {policy_info['id']}")
+                policy_help = policy_help[0]
+                policy_info["help"] = policy_help.text
+            else:
+                log.info(f"No Help found for {policy_info['id']}")
 
             elements = [
                 child
@@ -173,12 +200,90 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 if child.tag is not Comment and child.tag.endswith("parentCategory")
             ]
             if parent_category:
-                parent_category = parent_category[0].attrib["ref"]
+                # current scope needs to be updated while parsing for category chain
+                current_scope = os.path.splitext(admx_)[0]
 
+                parent_category_ref = parent_category[0].attrib["ref"]
+                log.debug(f"parent_category_ref: {parent_category_ref}")
+                category_chain = []
+                while True:
+                    log.debug(f"trace - parent_category_ref: {parent_category_ref}")
+                    if ":" in parent_category_ref:
+                        # refers to another file
+                        ref, name = parent_category_ref.split(":")
+                        # lookup known refs to files
+                        if REF_LOOKUP.get(ref):
+                            current_scope = REF_LOOKUP.get(ref)
+                            categories, string_table = _parse_admx_adml(current_scope)
+                            category = [
+                                child
+                                for child in categories
+                                if child.attrib["name"] == name
+                            ][0]
+                            display_name_ref = category.attrib["displayName"].split(
+                                "."
+                            )[-1][:-1]
+                            display_name = [
+                                child
+                                for child in string_table
+                                if child.attrib["id"] == display_name_ref
+                            ]
+                            category_chain.append(display_name[0].text)
+                            parent_category = [
+                                child
+                                for child in category
+                                if child.tag.endswith("parentCategory")
+                            ]
+                            if parent_category:
+                                parent_category_ref = parent_category[0].attrib["ref"]
+                            else:
+                                break
+                        else:
+                            raise ValueError(f"Unkown ref: {ref}")
+                    else:
+                        categories, string_table = _parse_admx_adml(current_scope)
+                        # lookup match in categories for this admx
+                        category = [
+                            child
+                            for child in categories
+                            if child.attrib["name"] == parent_category_ref
+                        ]
+                        if category:
+                            category = category[0]
+                        else:
+                            log.warning(
+                                f"category match NOT found for {parent_category_ref} for policy {policy_info['id']} in {admx_}"
+                            )
+                            category_chain.append("")
+                            break
+
+                        # match categtory to display name in adml
+                        display_name_ref = category.attrib["displayName"].split(".")[
+                            -1
+                        ][:-1]
+                        display_name = [
+                            child
+                            for child in string_table
+                            if child.attrib["id"] == display_name_ref
+                        ]
+                        category_chain.append(display_name[0].text)
+
+                        # get parentCategory for current category
+                        parent_category = [
+                            child
+                            for child in category
+                            if child.tag.endswith("parentCategory")
+                        ]
+                        if parent_category:
+                            parent_category_ref = parent_category[0].attrib["ref"]
+                        else:
+                            break
+                policy_info["path"] = os.path.join(*reversed(category_chain))
             else:
                 log.warning(f"parentCategory not found for {policy_info['id']} policy")
-
             all_policies.append(policy_info)
+    with open("all_policies.json", "w") as json_file:
+        json.dump(all_policies, json_file, indent=2)
     return all_policies
 
 
@@ -190,7 +295,7 @@ def generate_sls(policies, output_dir):
         os.makedirs(output_dir)
 
     for policy in policies:
-        log.debug(f"Generating sls for {policy['id']} policy")
+        log.info(f"Generating sls for {policy['id']} policy")
         if policy["class"] in ["User", "Machine"]:
             sls = {
                 policy.get("name", policy["id"]): {
@@ -212,8 +317,15 @@ def generate_sls(policies, output_dir):
                     ]
                 }
             }
-            sub_dir = "Computer" if policy["class"] == "Machine" else "User"
-            sub_dir_sls = [(sub_dir, sls)]
+            sub_dir_sls = [
+                (
+                    os.path.join(
+                        "Computer" if policy["class"] == "Machine" else "User",
+                        policy["path"].replace(">", "-"),
+                    ),
+                    sls,
+                )
+            ]
         elif policy["class"] == "Both":
             sls_machine = {
                 policy.get("name", policy["id"]): {
@@ -255,14 +367,20 @@ def generate_sls(policies, output_dir):
                     ]
                 }
             }
-            sub_dir_sls = [("Computer", sls_machine), ("User", sls_user)]
+            sub_dir_sls = [
+                (
+                    os.path.join("Computer", policy["path"].replace(">", "-")),
+                    sls_machine,
+                ),
+                (os.path.join("User", policy["path"].replace(">", "-")), sls_user),
+            ]
         else:
             log.warning(f"unusual policy class: {policy['class']}. Skipping...")
             continue
 
         for sdir_sls in sub_dir_sls:
             if not os.path.exists(os.path.join(output_dir, sdir_sls[0])):
-                os.mkdir(os.path.join(output_dir, sdir_sls[0]))
+                os.makedirs(os.path.join(output_dir, sdir_sls[0]))
 
             with open(
                 os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"), "w"
@@ -271,8 +389,7 @@ def generate_sls(policies, output_dir):
 
             if policy["help"] or policy["supportedOn"]:
                 with open(
-                    os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"),
-                    "rb+"
+                    os.path.join(output_dir, sdir_sls[0], policy["id"] + ".sls"), "rb+"
                 ) as sls_file:
                     sls_contents = sls_file.read()
                     sls_file.seek(0)
@@ -287,15 +404,38 @@ def generate_sls(policies, output_dir):
 
                         for line in comment_help_split:
                             yaml_help += line + "\n"
-                        #sls_file.write(yaml_help + sls_contents)
                         sls_file.write(yaml_help.encode("utf-8"))
                         sls_file.write(sls_contents)
 
 
-def generate_readme(output_dir):
-    with open(os.path.join(output_dir, "README.md")) as readme:
+def generate_readme(
+    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo"
+):
+    walk = os.walk(output_dir)
+    with open(os.path.join(output_dir, "README.md"), "w") as readme:
         readme.write("| file | name | class |\n")
         readme.write("| --- | --- | --- |\n")
+
+        for root, subdirs, files in walk:
+            fileroot = root.split(output_dir + "\\")[-1].replace("\\", "/")
+            for file_ in files:
+                if not file_.endswith(".sls"):
+                    continue
+
+                log.info(f"Writing README entry for {file_}")
+                with open(os.path.join(root, file_)) as sls_file:
+                    sls = yaml.load(sls_file, Loader=yaml.FullLoader)
+                name = list(sls.keys())[0]
+                policy_class_filter = list(
+                    filter(
+                        lambda kwarg: list(kwarg.keys())[0] == "policy_class",
+                        sls[name]["lgpo.set"],
+                    )
+                )[0]
+                _, policy_class = list(policy_class_filter.items())[0]
+                readme.write(f"| [{file_}]({base_uri + '/' + fileroot + '/' + file_}) ")
+                readme.write(f"| {name} ")
+                readme.write(f"| {policy_class} |\n")
 
 
 def main(
@@ -303,6 +443,7 @@ def main(
 ):
     all_policies = parse_policies(policy_path=policy_path, adml_language=adml_language)
     generate_sls(all_policies, output_path)
+    # generate_readme(output_path)
 
 
 if __name__ == "__main__":
