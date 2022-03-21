@@ -19,7 +19,7 @@ for root, subdirs, files in walk:
 @pytest.mark.parametrize("state", states)
 def test_state(state):
     with Popen(
-        ["C:\\salt\\salt-call.bat", "--local", "state.sls", f'"{state}"', "test=True"],
+        ["C:\\salt\\salt-call.bat", "--local", "state.sls", state, "test=True"],
         stdout=PIPE,
         stderr=PIPE,
         shell=True,
