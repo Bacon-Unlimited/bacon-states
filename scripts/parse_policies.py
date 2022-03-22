@@ -410,10 +410,10 @@ def generate_sls(policies, output_dir):
 
 
 def generate_readme(
-    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo/lgpo"
+    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo/LGPO"
 ):
     walk = os.walk(output_dir)
-    with open(os.path.join(output_dir, "README.md"), "w") as readme:
+    with open(os.path.join(output_dir, "README_LGPO_LIST.md"), "w") as readme:
         readme.write("| file | name | class |\n")
         readme.write("| --- | --- | --- |\n")
 
