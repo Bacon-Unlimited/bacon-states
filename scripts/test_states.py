@@ -9,6 +9,8 @@ walk = os.walk(STATES_PATH)
 states = []
 for root, subdirs, files in walk:
     for file_ in files:
+        if not file_.endswith(".sls"):
+            continue
         sls = ".".join(
             tuple(root.split(STATES_PATH + "\\")[-1].split("\\"))
             + (os.path.splitext(file_)[0],)
