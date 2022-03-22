@@ -1,0 +1,18 @@
+# TS_SUPPORTED_Win2k3_Sp1
+#
+# This policy setting allows you to specify the order in which an RD Session Host server attempts to locate Remote Desktop license servers.
+# 
+# If you enable this policy setting, an RD Session Host server first attempts to locate the specified license servers. If the specified license servers cannot be located, the RD Session Host server will attempt automatic license server discovery. In the automatic license server discovery process, an RD Session Host server in a Windows Server-based domain attempts to contact a license server in the following order:
+# 
+#     1. Remote Desktop license servers that are published in Active Directory Domain Services.
+# 
+#     2. Remote Desktop license servers that are installed on domain controllers in the same domain as the RD Session Host server.
+# 
+# If you disable or do not configure this policy setting, the RD Session Host server does not specify a license server at the Group Policy level.
+# 
+Use the specified Remote Desktop license servers:
+  lgpo.set:
+  - name: TS_LICENSE_SERVERS
+  - setting:
+      TS_LICENSE_EDIT: text-placeholder
+  - policy_class: Machine

@@ -1,0 +1,23 @@
+# windows:SUPPORTED_Windows_10_0
+#
+# Specifies the download method that Delivery Optimization can use in downloads of Windows Updates, Apps and App updates.
+# 
+# The following list shows the supported values:
+# 
+# 0 = HTTP only, no peering.
+# 
+# 1 = HTTP blended with peering behind the same NAT.
+# 
+# 2 = HTTP blended with peering across a private group. Peering occurs on devices in the same Active Directory Site (if exist) or the same domain by default. When this option is selected, peering will cross NATs. To create a custom group use Group ID in combination with Mode 2.
+# 
+# 3 = HTTP blended with Internet Peering.
+# 
+# 99 = Simple download mode with no peering. Delivery Optimization downloads using HTTP only and does not attempt to contact the Delivery Optimization cloud services.
+# 
+# 100 = Bypass mode. Do not use Delivery Optimization and use BITS instead.
+Download Mode:
+  lgpo.set:
+  - name: DownloadMode
+  - setting:
+      DownloadMode: enum-placeholder
+  - policy_class: Machine
