@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import sys
+import urllib.parse
 from logging import FileHandler, Formatter, StreamHandler
 
 import yaml
@@ -409,7 +410,7 @@ def generate_sls(policies, output_dir):
 
 
 def generate_readme(
-    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo"
+    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo/lgpo"
 ):
     walk = os.walk(output_dir)
     with open(os.path.join(output_dir, "README.md"), "w") as readme:
@@ -424,7 +425,11 @@ def generate_readme(
 
                 log.info(f"Writing README entry for {file_}")
                 with open(os.path.join(root, file_)) as sls_file:
-                    sls = yaml.load(sls_file, Loader=yaml.FullLoader)
+                    try:
+                        sls = yaml.load(sls_file, Loader=yaml.FullLoader)
+                    except UnicodeDecodeError as e:
+                        log.error(f"failed to load {os.path.join(root, file_)}: {e}")
+                        continue
                 name = list(sls.keys())[0]
                 policy_class_filter = list(
                     filter(
@@ -433,7 +438,9 @@ def generate_readme(
                     )
                 )[0]
                 _, policy_class = list(policy_class_filter.items())[0]
-                readme.write(f"| [{file_}]({base_uri + '/' + fileroot + '/' + file_}) ")
+                readme.write(
+                    f"| [{file_}]({base_uri + '/' + urllib.parse.quote(fileroot) + '/' + urllib.parse.quote(file_)}) "
+                )
                 readme.write(f"| {name} ")
                 readme.write(f"| {policy_class} |\n")
 
@@ -443,7 +450,7 @@ def main(
 ):
     all_policies = parse_policies(policy_path=policy_path, adml_language=adml_language)
     generate_sls(all_policies, output_path)
-    # generate_readme(output_path)
+    generate_readme(output_path)
 
 
 if __name__ == "__main__":
