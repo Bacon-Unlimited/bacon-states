@@ -427,7 +427,7 @@ def generate_readme(
                 with open(os.path.join(root, file_)) as sls_file:
                     try:
                         sls = yaml.load(sls_file, Loader=yaml.FullLoader)
-                    except UnicodeDecodeError as e:
+                    except Exception as e:
                         log.error(f"failed to load {os.path.join(root, file_)}: {e}")
                         continue
                 name = list(sls.keys())[0]
