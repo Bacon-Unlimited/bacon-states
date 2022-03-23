@@ -3,7 +3,6 @@ from subprocess import PIPE, Popen
 
 import pytest
 import yaml
-from salt.exceptions import MinionError
 
 STATES_PATH = "C:\\salt\\srv\\salt"
 
@@ -45,6 +44,6 @@ def test_state(state):
             elif "KeyError" in stdout.decode("utf-8"):
                 raise KeyError
             elif "[ERROR   ] ADMX policy" in stderr.decode("utf-8"):
-                raise MinionError
+                raise ValueError
             else:
                 raise AssertionError
