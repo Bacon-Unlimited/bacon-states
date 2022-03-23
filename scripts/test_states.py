@@ -2,6 +2,8 @@ import os
 from subprocess import PIPE, Popen
 
 import pytest
+import yaml
+from salt.exceptions import MinionError
 
 STATES_PATH = "C:\\salt\\srv\\salt"
 
@@ -36,4 +38,13 @@ def test_state(state):
                 f"\nstdout:\n{stdout.decode('utf-8')}\nstderr:\n{stderr.decode('utf-8')}"
             )
             print(f"retcode: {retcode}")
-            raise AssertionError
+            if "UnicodeDecodeError" in stdout.decode("utf-8"):
+                raise UnicodeDecodeError
+            elif "yaml.reader.ReaderError" in stdout.decode("utf-8"):
+                raise yaml.reader.ReaderError
+            elif "KeyError" in stdout.decode("utf-8"):
+                raise KeyError
+            elif "[ERROR   ] ADMX policy" in stderr.decode("utf-8"):
+                raise MinionError
+            else:
+                raise AssertionError
