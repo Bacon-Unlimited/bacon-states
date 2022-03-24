@@ -107,52 +107,105 @@ Force a specific Start background:
 
 Below is a list of the currently known failed LGPO states
 
-- `Computer.Network.Lanman Server.Pol_CipherSuiteOrder`
-- `Computer.Network.Lanman Workstation.Pol_CipherSuiteOrder`
-- `Computer.System.KDC.ForestSearch`
-- `Computer.System.Kerberos.DevicePKInitEnabled`
-- `Computer.System.Kerberos.ForestSearch`
-- `Computer.System.Troubleshooting and Diagnostics.Corrupted File Recovery.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Disk Diagnostic.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Fault Tolerant Heap.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Microsoft Support Diagnostic Tool.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.MSI Corrupted File Recovery.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Windows Memory Leak Diagnosis.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Windows Performance PerfTrack.WdiScenarioExecutionPolicy`
-- `Computer.System.Troubleshooting and Diagnostics.Windows Resource Exhaustion Detection and Resolution.WdiScenarioExecutionPolicy`
-- `Computer.Windows Components.Event Log Service.Application.Channel_Log_Retention_1`
-- `Computer.Windows Components.Event Log Service.Security.Channel_Log_Retention_2`
-- `Computer.Windows Components.Event Log Service.Setup.Channel_Log_Retention_3`
-- `Computer.Windows Components.Event Log Service.System.Channel_Log_Retention_4`
-- `Computer.Windows Components.Internet Explorer.EnterpriseModeSiteList`
-- `Computer.Windows Components.Microsoft Edge.EnterpriseModeSiteList`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Applications.Calculator`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Applications.Notepad`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Finance`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Games`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Maps`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Music`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.News`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Reader`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Sports`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Travel`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Video`
-- `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Weather`
-- `Computer.Windows Components.Windows Remote Shell.MaxConcurrentUsers`
-- `User.Windows Components.Internet Explorer.EnterpriseModeSiteList`
-- `User.Windows Components.Internet Explorer.Administrator Approved Controls.Carpoint`
-- `User.Windows Components.Internet Explorer.Administrator Approved Controls.Investor`
-- `User.Windows Components.Internet Explorer.Administrator Approved Controls.MSNBC`
-- `User.Windows Components.Microsoft Edge.EnterpriseModeSiteList`
-- `User.Windows Components.Microsoft User Experience Virtualization.Applications.Calculator`
-- `User.Windows Components.Microsoft User Experience Virtualization.Applications.Notepad`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Finance`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Games`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Maps`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Music`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.News`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Reader`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Sports`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Travel`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Video`
-- `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Weather`
+| state | error |
+|  --- | --- |
+| `Computer.Network.DirectAccess Client Experience Settings.CorporateResources` | `UnicodeDecodeError` | 
+| `Computer.Network.DirectAccess Client Experience Settings.FriendlyName` | `UnicodeDecodeError` |
+| `Computer.Network.DirectAccess Client Experience Settings.LocalNamesOn` | `UnicodeDecodeError` |
+| `Computer.Network.Lanman Server.Pol_CipherSuiteOrder` | `ValueError` | 
+| `Computer.Network.Lanman Workstation.Pol_CipherSuiteOrder` | `ValueError` |
+| `Computer.System.Servicing` | `UnicodeDecodeError` |
+| `Computer.System.Group Policy.EnableLogonOptimization` | `UnicodeDecodeError` |
+| `Computer.System.Group Policy.EnableLogonOptimizationOnServerSKU` | `UnicodeDecodeError` |
+| `Computer.System.Group Policy.LogonScriptDelay` | `UnicodeDecodeError` |
+| `Computer.System.KDC.ForestSearch` | `ValueError` |
+| `Computer.System.Kerberos.DevicePKInitEnabled` | `UnicodeDecodeError` |
+| `Computer.System.Kerberos.ForestSearch` | `ValueError` |
+| `Computer.System.Logon.SyncForegroundPolicy` | `UnicodeDecodeError` |
+| `Computer.System.Server Manager.DoNotLaunchServerManager` | `UnicodeDecodeError` |
+| `Computer.System.Server Manager.ServerManagerAutoRefreshRate` | `UnicodeDecodeError` |
+| `Computer.System.Storage Sense.SS_ConfigStorageSenseGlobalCadence` | `UnicodeDecodeError` |
+| `Computer.System.Troubleshooting and Diagnostics.Corrupted File Recovery.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Disk Diagnostic.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Fault Tolerant Heap.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Microsoft Support Diagnostic Tool.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.MSI Corrupted File Recovery.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Windows Memory Leak Diagnosis.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Windows Performance PerfTrack.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Troubleshooting and Diagnostics.Windows Resource Exhaustion Detection and Resolution.WdiScenarioExecutionPolicy` | `ValueError` |
+| `Computer.System.Trusted Platform Module Services.ClearTPMIfNotReady_Name` | `UnicodeDecodeError` |
+| `Computer.System.User Profiles.USER_HOME` | `UnicodeDecodeError` |
+| `Computer.Windows Components.App Privacy.LetAppsActivateWithVoiceAboveLock` | `UnicodeDecodeError` |
+| `Computer.Windows Components.BitLocker Drive Encryption.EncryptionMethodWithXts_Name` | `UnicodeDecodeError` |
+| `Computer.Windows Components.BitLocker Drive Encryption.Fixed Data Drives.FDVEDrive_Name` | `UnicodeDecodeError` |
+| `Computer.Windows Components.BitLocker Drive Encryption.Operating System Drives.OSEDrive_Name` | `UnicodeDecodeError` |
+| `Computer.Windows Components.BitLocker Drive Encryption.Removable Data Drives.RDVEDrive_Name` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Data Collection and Preview Builds.ConfigureTelemetryOptInSettingsUx` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Event Log Service.Application.Channel_Log_Retention_1` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Event Log Service.Security.Channel_Log_Retention_2` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Event Log Service.Setup.Channel_Log_Retention_3` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Event Log Service.System.Channel_Log_Retention_4` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Internet Explorer.EnterpriseModeSiteList` | `ValueError` |
+| `Computer.Windows Components.Internet Explorer.SecondaryHomePages` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Internet Explorer.TabProcGrowth` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Internet Explorer.Internet Control Panel.General Page.Browsing History.AppCache_MaxTrustedDomainLimitInMB` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Internet Explorer.Internet Control Panel.General Page.Browsing History.IndexedDB_MaxTrustedDomainLimitInMB` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft Defender Antivirus.MAPS.DisableBlockAtFirstSeen` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft Defender Antivirus.Network Inspection System.Nis_Consumers_IPS_sku_differentiation_Signature_Set_Guid` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft Defender Antivirus.Reporting.Reporting_CriticalFailureTimeout` | `UnicodeDecodeError` |
+|`Computer.Windows Components.Microsoft Defender Antivirus.Security Intelligence Updates.SignatureUpdate_FallbackOrder` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft Edge.ConfigureKioskMode` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft Edge.EnterpriseModeSiteList` | `ValueError` |
+| `Computer.Windows Components.Microsoft Edge.SetDefaultSearchEngine`| `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.ConfigureSyncMethod` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.ConfigureVdi` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Applications.Calculator` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Applications.Notepad` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Finance` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Games` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Maps` | `KeyError` | 
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Music` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.News` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Reader` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Sports` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Travel` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Video` | `KeyError` |
+| `Computer.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Weather` | `KeyError` |
+| `Computer.Windows Components.Tablet PC.Input Panel.EdgeTarget_2` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Tablet PC.Input Panel.IPTIPTarget_2` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Tablet PC.Input Panel.PasswordSecurity_2` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Tablet PC.Input Panel.ScratchOut_2` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Windows Logon Options.ConfigAutomaticRestartSignOn` | `UnicodeDecodeError` |
+| `Computer.Windows Components.Windows Remote Shell.MaxConcurrentUsers` | `KeyError` |
+| `User.Windows Components.Internet Explorer.EnterpriseModeSiteList` | `ValueError` |
+| `User.Windows Components.Internet Explorer.SecondaryHomePages` | `UnicodeDecodeError` |
+| `User.Windows Components.Internet Explorer.TabProcGrowth` | `UnicodeDecodeError` |
+| `User.Windows Components.Internet Explorer.Administrator Approved Controls.Carpoint` | `KeyError` |
+| `User.Windows Components.Internet Explorer.Administrator Approved Controls.Investor` | `KeyError` |
+| `User.Windows Components.Internet Explorer.Administrator Approved Controls.MSNBC` | `KeyError` |
+| `User.Windows Components.Internet Explorer.Internet Control Panel.General Page.Browsing History.AppCache_MaxTrustedDomainLimitInMB` | `UnicodeDecodeError` |
+| `User.Windows Components.Internet Explorer.Internet Control Panel.General Page.Browsing History.IndexedDB_MaxTrustedDomainLimitInMB` | `UnicodeDecodeError` |
+| `User.Windows Components.Microsoft Edge.ConfigureKioskMode` | `UnicodeDecodeError` |
+| `User.Windows Components.Microsoft Edge.EnterpriseModeSiteList` | `ValueError` |
+| `User.Windows Components.Microsoft Edge.SetDefaultSearchEngine` | `UnicodeDecodeError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.ConfigureSyncMethod` | `UnicodeDecodeError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.ConfigureVdi` | `UnicodeDecodeError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Applications.Calculator` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Applications.Notepad` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Finance` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Games` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Maps` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Music` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.News` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Reader` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Sports` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Travel` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Video` | `KeyError` |
+| `User.Windows Components.Microsoft User Experience Virtualization.Windows Apps.Weather` | `KeyError` |
+| `User.Windows Components.Tablet PC.Input Panel.EdgeTarget_1` | `UnicodeDecodeError` |
+| `User.Windows Components.Tablet PC.Input Panel.IPTIPTarget_1` | `UnicodeDecodeError` |
+| `User.Windows Components.Tablet PC.Input Panel.PasswordSecurity_1` | `UnicodeDecodeError` |
+| `User.Windows Components.Tablet PC.Input Panel.ScratchOut_1` | `UnicodeDecodeError` |
+| `User.Windows Components.Windows Logon Options.LogonHoursNotificationPolicyDescription` | `UnicodeDecodeError` |
+| `User.Windows Components.Windows Logon Options.LogonHoursPolicyDescription` | `UnicodeDecodeError` |
+| `User.Windows Components.Work Folders.Pol_UserEnableWorkFolders` | `UnicodeDecodeError` |

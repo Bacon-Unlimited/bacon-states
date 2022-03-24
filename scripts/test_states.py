@@ -38,12 +38,36 @@ def test_state(state):
             )
             print(f"retcode: {retcode}")
             if "UnicodeDecodeError" in stdout.decode("utf-8"):
-                raise UnicodeDecodeError
+                unicode_error = list(
+                    filter(
+                        lambda line: "UnicodeDecodeError" in line,
+                        stdout.decode("utf-8").splitlines()
+                    )
+                )[0]
+                raise TypeError(unicode_error)
             elif "yaml.reader.ReaderError" in stdout.decode("utf-8"):
-                raise yaml.reader.ReaderError
+                yaml_error = list(
+                    filter(
+                        lambda line: "yaml.reader.ReaderError" in line,
+                        stdout.decode("utf-8").splitlines()
+                    )
+                )[0]
+                raise TypeError(yaml_error)
             elif "KeyError" in stdout.decode("utf-8"):
-                raise KeyError
+                key_error = list(
+                    filter(
+                        lambda line: "KeyError" in line,
+                        stdout.decode("utf-8").splitlines()
+                    )
+                )[0]
+                raise KeyError(key_error)
             elif "[ERROR   ] ADMX policy" in stderr.decode("utf-8"):
-                raise ValueError
+                value_error = list(
+                    filter(
+                        lambda line: "[ERROR   ] ADMX policy" in line,
+                        stderr.decode("utf-8").splitlines()
+                    )
+                )[0]
+                raise ValueError(value_error)
             else:
                 raise AssertionError
