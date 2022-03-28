@@ -6,7 +6,7 @@
 # 
 # Enabling this policy setting blocks user access to the Windows Update Web site at http://windowsupdate.microsoft.com. Also, the policy setting removes the Windows Update hyperlink from the Start menu and from the Tools menu in Internet Explorer.
 # 
-# Windows Update, the online extension of Windows, offers software updates to keep a user’s system up-to-date. The Windows Update Product Catalog determines any system files, security fixes, and Microsoft updates that users need and shows the newest versions available for download.
+# Windows Update, the online extension of Windows, offers software updates to keep a users system up-to-date. The Windows Update Product Catalog determines any system files, security fixes, and Microsoft updates that users need and shows the newest versions available for download.
 # 
 # If you disable or do not configure this policy setting, the Windows Update hyperlink is available from the Start menu and from the Tools menu in Internet Explorer.
 # 

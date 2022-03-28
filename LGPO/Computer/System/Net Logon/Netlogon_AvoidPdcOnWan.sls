@@ -2,7 +2,7 @@
 #
 # This policy setting defines whether a domain controller (DC) should attempt to verify the password provided by a client with the PDC emulator if the DC failed to validate the password.
 # 
-# Contacting the PDC emulator is useful in case the client’s password was recently changed and did not propagate to the DC yet. Users may want to disable this feature if the PDC emulator is located over a slow WAN connection.
+# Contacting the PDC emulator is useful in case the clients password was recently changed and did not propagate to the DC yet. Users may want to disable this feature if the PDC emulator is located over a slow WAN connection.
 # 
 # If you enable this policy setting, the DCs to which this policy setting applies will attempt to verify a password with the PDC emulator if the DC fails to validate the password.
 # 

@@ -1,6 +1,6 @@
 # SUPPORTED_IE8
 #
-# This setting determines whether IE automatically downloads updated versions of Microsoft’s VersionList.XML. IE uses this file to determine whether an ActiveX control should be stopped from loading.
+# This setting determines whether IE automatically downloads updated versions of Microsofts VersionList.XML. IE uses this file to determine whether an ActiveX control should be stopped from loading.
 # 
 # If you enable this setting, IE stops downloading updated versions of VersionList.XML. Turning off this automatic download breaks the out-of-date ActiveX control blocking feature by not letting the version list update with newly outdated controls, potentially compromising the security of your computer.
 # 

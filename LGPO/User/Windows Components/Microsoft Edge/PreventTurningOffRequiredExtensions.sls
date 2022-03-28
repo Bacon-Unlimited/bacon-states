@@ -4,7 +4,7 @@
 # 
 # When you enable this policy, you must provide a semi-colon delimited list of extension package family names (PFNs).  For example, adding Microsoft.OneNoteWebClipper_8wekyb3d8bbwe;Microsoft.OfficeOnline_8wekyb3d8bbwe  prevents a user from turning off the OneNote Web Clipper and Office Online extension.
 # 
-# When enabled, removing extensions from the list does not uninstall the extension from the user’s computer automatically. To uninstall the extension, use any available enterprise deployment channel.
+# When enabled, removing extensions from the list does not uninstall the extension from the users computer automatically. To uninstall the extension, use any available enterprise deployment channel.
 # 
 # If you enable the Allow Developer Tools policy, then this policy does not prevent users from debugging and altering the logic on an extension.
 # 

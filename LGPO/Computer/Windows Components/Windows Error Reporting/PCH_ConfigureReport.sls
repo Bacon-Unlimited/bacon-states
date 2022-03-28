@@ -8,7 +8,7 @@
 # 
 # If you enable this policy setting, the setting overrides any user changes made to Windows Error Reporting settings in Control Panel, and default values are applied for any Windows Error Reporting policy settings that are not configured (even if users have changed settings by using Control Panel). If you enable this policy setting, you can configure the following settings in the policy setting:
 # 
-# - ""Do not display links to any Microsoft ‘More information’ websites"": Select this option if you do not want error dialog boxes to display links to Microsoft websites.
+# - ""Do not display links to any Microsoft More information websites"": Select this option if you do not want error dialog boxes to display links to Microsoft websites.
 # 
 # - ""Do not collect additional files"": Select this option if you do not want additional files to be collected and included in error reports.
 # 
@@ -18,7 +18,7 @@
 # 
 # - ""Corporate file path"": Type a UNC path to enable Corporate Error Reporting.  All errors are stored at the specified location instead of being sent directly to Microsoft, and the next administrator to log onto the computer can send the error reports to Microsoft.
 # 
-# - ""Replace instances of the word ‘Microsoft’ with"":  You can specify text with which to customize your error report dialog boxes.  The word ""Microsoft"" is replaced with the specified text.
+# - ""Replace instances of the word Microsoft with"":  You can specify text with which to customize your error report dialog boxes.  The word ""Microsoft"" is replaced with the specified text.
 # 
 # If you do not configure this policy setting, users can change Windows Error Reporting settings in Control Panel. By default, these settings are Enable Reporting on computers that are running Windows XP, and Report to Queue on computers that are running Windows Server 2003.
 # 

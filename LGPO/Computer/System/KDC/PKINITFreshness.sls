@@ -1,6 +1,6 @@
 # windows:SUPPORTED_Windows_10_0
 #
-# Support for PKInit Freshness Extension requires Windows Server 2016 domain functional level (DFL). If the domain controller’s domain is not at Windows Server 2016 DFL or higher this policy will not be applied.
+# Support for PKInit Freshness Extension requires Windows Server 2016 domain functional level (DFL). If the domain controllers domain is not at Windows Server 2016 DFL or higher this policy will not be applied.
 # 
 # This policy setting allows you to configure a domain controller (DC) to support the PKInit Freshness Extension.
 # 

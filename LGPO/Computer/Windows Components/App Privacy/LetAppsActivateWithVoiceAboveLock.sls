@@ -11,7 +11,7 @@
 # 
 # If you disable or do not configure this policy setting, employees in your organization can decide whether users can interact with applications using speech while the system is locked by using Settings > Privacy on the device.
 # 
-# This policy is applied to Windows apps and Cortana. It takes precedence of the “Allow Cortana above lock” policy. This policy is applicable only when “Allow voice activation” policy is configured to allow applications to be activated with voice.
+# This policy is applied to Windows apps and Cortana. It takes precedence of the Allow Cortana above lock policy. This policy is applicable only when Allow voice activation policy is configured to allow applications to be activated with voice.
 #       
 Let Windows apps activate with voice while the system is locked:
   lgpo.set:

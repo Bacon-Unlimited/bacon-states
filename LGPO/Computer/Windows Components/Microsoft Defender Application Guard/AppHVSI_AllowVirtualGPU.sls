@@ -7,7 +7,7 @@
 # Note:
 # Be aware that enabling this setting with potentially compromised graphics devices or drivers might pose a risk to the host device.
 # 
-# If you disable or don’t configure this setting, Microsoft Defender Application Guard uses software-based (CPU) rendering and won’t load any third-party graphics drivers or interact with any connected graphics hardware.
+# If you disable or dont configure this setting, Microsoft Defender Application Guard uses software-based (CPU) rendering and wont load any third-party graphics drivers or interact with any connected graphics hardware.
 #         
 Allow hardware-accelerated rendering for Microsoft Defender Application Guard:
   lgpo.set:

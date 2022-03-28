@@ -4,7 +4,7 @@
 # 
 # Description: The notification area is located at the far right end of the task bar and includes the icons for current notifications and the system clock.
 # 
-# If this setting is enabled, the user’s entire notification area, including the notification icons, is hidden. The taskbar displays only the Start button, taskbar buttons, custom toolbars (if any), and the system clock.
+# If this setting is enabled, the users entire notification area, including the notification icons, is hidden. The taskbar displays only the Start button, taskbar buttons, custom toolbars (if any), and the system clock.
 # 
 # If this setting is disabled or is not configured, the notification area is shown in the user's taskbar.
 # 

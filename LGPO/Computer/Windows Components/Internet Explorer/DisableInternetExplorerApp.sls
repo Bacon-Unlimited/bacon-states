@@ -8,7 +8,7 @@
 # - Redirects all attempts at launching Internet Explorer 11 to Microsoft Edge Stable Channel browser.
 # - Overrides any other policies that redirect to Internet Explorer 11.
 # 
-# If you disable, or don’t configure this policy, all sites are opened using the current active browser settings. Note: Microsoft Edge Stable Channel must be installed for this policy to take effect.
+# If you disable, or dont configure this policy, all sites are opened using the current active browser settings. Note: Microsoft Edge Stable Channel must be installed for this policy to take effect.
 Disable Internet Explorer 11 as a standalone browser:
   lgpo.set:
   - name: DisableInternetExplorerApp

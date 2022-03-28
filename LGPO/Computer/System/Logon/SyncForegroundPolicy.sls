@@ -11,8 +11,8 @@
 # On servers running Windows Server 2008 or later, this policy setting is ignored during Group Policy processing at computer startup and Group Policy processing will be synchronous (these servers wait for the network to be initialized during computer startup). 
 # 
 # If the server is configured as follows, this policy setting takes effect during Group Policy processing at user logon:
-# •  The server is configured as a terminal server (that is, the Terminal Server role service is installed and configured on the server); and
-# •  The “Allow asynchronous user Group Policy processing when logging on through Terminal Services” policy setting is enabled. This policy setting is located under Computer Configuration\Policies\Administrative templates\System\Group Policy\.
+#   The server is configured as a terminal server (that is, the Terminal Server role service is installed and configured on the server); and
+#   The Allow asynchronous user Group Policy processing when logging on through Terminal Services policy setting is enabled. This policy setting is located under Computer Configuration\Policies\Administrative templates\System\Group Policy\.
 # 
 # If this configuration is not implemented on the server, this policy setting is ignored. In this case, Group Policy processing at user logon is synchronous (these servers wait for the network to be initialized during user logon).
 # 

@@ -8,7 +8,7 @@
 # 
 # If you enable this policy setting, you set the rate at which Internet Explorer creates new tab processes to low, medium, or high, or to an integer.
 # 
-# If you disable or do not configure this policy setting, the tab process growth is set to the default. The user can change this value by using the registry key. Note: On Terminal Server, the default value is the integer “1”.
+# If you disable or do not configure this policy setting, the tab process growth is set to the default. The user can change this value by using the registry key. Note: On Terminal Server, the default value is the integer 1.
 Set tab process growth:
   lgpo.set:
   - name: TabProcGrowth

@@ -6,7 +6,7 @@
 # 
 # If you disable this policy setting, users will always go to the Start screen when they sign in.
 # 
-# If you don’t configure this policy setting, the default setting for the user’s device will be used, and the user can choose to change it.
+# If you dont configure this policy setting, the default setting for the users device will be used, and the user can choose to change it.
 Go to the desktop instead of Start when signing in:
   lgpo.set:
   - name: GoToDesktopOnSignIn

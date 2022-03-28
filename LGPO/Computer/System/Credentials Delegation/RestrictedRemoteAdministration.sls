@@ -6,11 +6,11 @@
 # Remote Desktop Client
 # 
 # If you enable this policy setting, the following options are supported:
-#  
+# 
 # Restrict credential delegation: Participating applications must use Restricted Admin or Remote Credential Guard to connect to remote hosts.
-#  
+# 
 # Require Remote Credential Guard: Participating applications must use Remote Credential Guard to connect to remote hosts.
-#  
+# 
 # Require Restricted Admin: Participating applications must use Restricted Admin to connect to remote hosts.
 # 
 # If you disable or do not configure this policy setting, Restricted Admin and Remote Credential Guard mode are not enforced and participating apps can delegate credentials to remote devices.

@@ -6,7 +6,7 @@
 # 
 # If you disable or do not configure this policy setting, the user can add secondary home pages.
 # 
-# Note: If the “Disable Changing Home Page Settings” policy is enabled, the user cannot add secondary home pages.
+# Note: If the Disable Changing Home Page Settings policy is enabled, the user cannot add secondary home pages.
 Disable changing secondary home page settings:
   lgpo.set:
   - name: SecondaryHomePages

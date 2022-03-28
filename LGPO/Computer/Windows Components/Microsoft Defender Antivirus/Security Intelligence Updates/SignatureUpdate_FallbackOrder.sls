@@ -1,6 +1,6 @@
 # windows:SUPPORTED_Windows8
 #
-# This policy setting allows you to define the order in which different security intelligence update sources should be contacted. The value of this setting should be entered as a pipe-separated string enumerating the security intelligence update sources in order. Possible values are: “InternalDefinitionUpdateServer”, “MicrosoftUpdateServer”, “MMPC”, and “FileShares”
+# This policy setting allows you to define the order in which different security intelligence update sources should be contacted. The value of this setting should be entered as a pipe-separated string enumerating the security intelligence update sources in order. Possible values are: InternalDefinitionUpdateServer, MicrosoftUpdateServer, MMPC, and FileShares
 # 
 #     For example: { InternalDefinitionUpdateServer | MicrosoftUpdateServer | MMPC }
 # 

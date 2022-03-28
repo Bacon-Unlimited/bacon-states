@@ -6,7 +6,7 @@
 # 
 # If you enable this policy setting, searching from the Apps view will only search the list of installed apps.
 # 
-# If you disable or don’t configure this policy setting, the user can configure this setting.
+# If you disable or dont configure this policy setting, the user can configure this setting.
 Search just apps from the Apps view:
   lgpo.set:
   - name: DisableGlobalSearchOnAppsView

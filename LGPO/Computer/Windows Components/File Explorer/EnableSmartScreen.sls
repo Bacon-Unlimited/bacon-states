@@ -6,8 +6,8 @@
 # 
 # If you enable this policy, SmartScreen will be turned on for all users.  Its behavior can be controlled by the following options:
 # 
-# • Warn and prevent bypass
-# • Warn
+#  Warn and prevent bypass
+#  Warn
 # 
 # If you enable this policy with the "Warn and prevent bypass" option, SmartScreen's dialogs will not present the user with the option to disregard the warning and run the app.  SmartScreen will continue to show the warning on subsequent attempts to run the app.
 # 

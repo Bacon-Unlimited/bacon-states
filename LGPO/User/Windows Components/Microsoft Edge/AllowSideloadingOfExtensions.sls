@@ -12,7 +12,7 @@
 # Default setting: Disabled or not configured
 # Related policies:
 # - Allows development of Windows Store apps and installing them from an integrated development environment (IDE)
-# - Allow all trusted apps to install​
+# - Allow all trusted apps to install
 Allow Sideloading of extension:
   lgpo.set:
   - name: AllowSideloadingOfExtensions

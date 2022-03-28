@@ -1,7 +1,7 @@
 # windows:SUPPORT_WINDOWS_10_0_RS6
 #
 # 
-# When Storage Sense runs, it can dehydrate cloud-backed content that hasn’t been opened in a certain amount of days.
+# When Storage Sense runs, it can dehydrate cloud-backed content that hasnt been opened in a certain amount of days.
 # 
 # If the group policy "Allow Storage Sense" is disabled, then this policy does not have any effect.
 # 

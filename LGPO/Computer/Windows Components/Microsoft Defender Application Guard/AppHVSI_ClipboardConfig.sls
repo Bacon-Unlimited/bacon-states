@@ -11,7 +11,7 @@
 # - Enable the clipboard to copy content from the host to Application Guard.
 # 
 # Note:
-# We recommend that you don't enable copying from the host to Application Guard. If you enable this functionality, a potentially compromised Application Guard session will have access to the host device’s clipboard and its content.
+# We recommend that you don't enable copying from the host to Application Guard. If you enable this functionality, a potentially compromised Application Guard session will have access to the host devices clipboard and its content.
 # 
 # If you choose to enable copying, you must also choose the type of content that can be copied, by using the content options:
 # 

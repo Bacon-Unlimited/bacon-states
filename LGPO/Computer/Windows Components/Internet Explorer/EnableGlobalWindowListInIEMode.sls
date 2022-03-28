@@ -5,7 +5,7 @@
 # 
 # If you enable this policy, Internet Explorer mode will use the global window list.
 # 
-# If you disable or don’t configure this policy, Internet Explorer mode will continue to maintain a separate window list.
+# If you disable or dont configure this policy, Internet Explorer mode will continue to maintain a separate window list.
 # 
 # To learn more about Internet Explorer mode, see https://go.microsoft.com/fwlink/?linkid=2102921
 # To learn more about disabling Internet Explorer 11 as a standalone browser, see https://go.microsoft.com/fwlink/?linkid=2168340

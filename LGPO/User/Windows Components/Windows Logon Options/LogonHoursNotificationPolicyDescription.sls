@@ -6,7 +6,7 @@
 # 
 # If you disable or do not configure this setting, users receive warnings before the logon hours expire, if actions have been set to occur when the logon hours expire.
 # 
-# Note: If you configure this setting, you might want to examine and appropriately configure the “Set action to take when logon hours expire” setting. If “Set action to take when logon hours expire” is disabled or not configured, the “Remove logon hours expiration warnings” setting will have no effect, and users receive no warnings about logon hour expiration
+# Note: If you configure this setting, you might want to examine and appropriately configure the Set action to take when logon hours expire setting. If Set action to take when logon hours expire is disabled or not configured, the Remove logon hours expiration warnings setting will have no effect, and users receive no warnings about logon hour expiration
 Remove logon hours expiration warnings:
   lgpo.set:
   - name: LogonHoursNotificationPolicyDescription

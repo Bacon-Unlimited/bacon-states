@@ -6,7 +6,7 @@
 # 
 # Enable this policy setting if a specific app or system component that uses balloon notifications has compatibility issues with toast notifications. 
 # 
-# If you disable or don’t configure this policy setting, all notifications will appear as toast notifications.
+# If you disable or dont configure this policy setting, all notifications will appear as toast notifications.
 # 
 # A reboot is required for this policy setting to take effect.
 Disable showing balloon notifications as toasts.:

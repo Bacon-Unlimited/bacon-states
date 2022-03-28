@@ -4,7 +4,7 @@
 # 
 # This policy setting allows you to set support for Kerberos to attempt authentication using the certificate for the device to the domain.
 # 
-# If you enable this policy setting, the devices credentials will be selected based on the following options:
+# If you enable this policy setting, the devices credentials will be selected based on the following options:
 # 
 # Automatic: Device will attempt to authenticate using its certificate. If the DC does not support computer account authentication using certificates then authentication with password will be attempted.
 # 

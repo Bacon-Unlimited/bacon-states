@@ -1,6 +1,6 @@
 # windows:SUPPORTED_WindowsXP
 #
-# This policy setting specifies the additional time for the computer to wait for the domain controller’s (DC) response when logging on to the network.
+# This policy setting specifies the additional time for the computer to wait for the domain controllers (DC) response when logging on to the network.
 # 
 # To specify the expected dial-up delay at logon, click Enabled, and then enter the desired value in seconds (for example, the value "60" is 1 minute).
 # 

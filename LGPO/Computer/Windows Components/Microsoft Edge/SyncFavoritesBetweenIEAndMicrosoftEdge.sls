@@ -4,7 +4,7 @@
 # 
 # If you enable this setting, employees can sync their favorites between Internet Explorer and Microsoft Edge.
 # 
-# If you disable or don't configure this setting, employees can’t sync their favorites between Internet Explorer and Microsoft Edge.
+# If you disable or don't configure this setting, employees cant sync their favorites between Internet Explorer and Microsoft Edge.
 #       
 Keep favorites in sync between Internet Explorer and Microsoft Edge:
   lgpo.set:

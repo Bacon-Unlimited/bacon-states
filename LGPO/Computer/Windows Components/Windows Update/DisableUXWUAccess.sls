@@ -2,7 +2,7 @@
 #
 # This setting allows you to remove access to scan Windows Update.
 # 
-# If you enable this setting user access to Windows Update scan, download and install is removed.
+# If you enable this setting user access to Windows Update scan, download andinstall is removed.
 #       
 Remove access to use all Windows Update features:
   lgpo.set:

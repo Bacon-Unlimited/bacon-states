@@ -1,12 +1,12 @@
 # windows:SUPPORTED_Windows_10_0_NOARM
 #
-# 0 (default) – Use the default Windows Update notifications
-# 1 – Turn off all notifications, excluding restart warnings
-# 2 – Turn off all notifications, including restart warnings
+# 0 (default)  Use the default Windows Update notifications
+# 1  Turn off all notifications, excluding restart warnings
+# 2  Turn off all notifications, including restart warnings
 # 
-# This policy allows you to define what Windows Update notifications users see. This policy doesn’t control how and when updates are downloaded and installed.
+# This policy allows you to define what Windows Update notifications users see. This policy doesnt control how and when updates are downloaded and installed.
 # 
-# Important: if you choose not to get update notifications and also define other Group policy so that devices aren’t automatically getting updates, neither you nor device users will be aware of critical security, quality, or feature updates, and your devices may be at risk.
+# Important: if you choose not to get update notifications and also define other Group policy so that devices arent automatically getting updates, neither you nor device users will be aware of critical security, quality, or feature updates, and your devices may be at risk.
 #       
 Display options for update notifications:
   lgpo.set:

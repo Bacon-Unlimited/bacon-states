@@ -6,7 +6,7 @@
 # 
 # If you disable or do not configure this policy setting, file shortcut icons that use remote paths are prevented from being displayed.
 # 
-# Note: Allowing the use of remote paths in file shortcut icons can expose users’ computers to security risks.
+# Note: Allowing the use of remote paths in file shortcut icons can expose users computers to security risks.
 Allow the use of remote paths in file shortcut icons:
   lgpo.set:
   - name: EnableShellShortcutIconRemotePath

@@ -2,7 +2,7 @@
 #
 # This policy setting enables application isolation through Microsoft Defender Application Guard.
 # 
-# Application Guard uses Windows Hypervisor to create a virtualized environment for apps that are configured to use virtualization-based security isolation. While in isolation, improper user interactions and app vulnerabilities can’t compromise the kernel or any other apps running outside of the virtualized environment.
+# Application Guard uses Windows Hypervisor to create a virtualized environment for apps that are configured to use virtualization-based security isolation. While in isolation, improper user interactions and app vulnerabilities cant compromise the kernel or any other apps running outside of the virtualized environment.
 # 
 # If you enable this setting, Application Guard is turned on for your organization.
 #         

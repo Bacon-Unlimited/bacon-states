@@ -6,7 +6,7 @@
 # 
 # - On the domain controllers (DC), discovers a DC that has not been discovered.
 # 
-# - On the PDC, attempts to add the <DomainName>[1B] NetBIOS name if it hasn’t already been successfully added.
+# - On the PDC, attempts to add the <DomainName>[1B] NetBIOS name if it hasnt already been successfully added.
 # 
 # None of these operations are critical. 15 minutes is optimal in all but extreme cases. For instance, if a DC is separated from a trusted domain by an expensive (e.g., ISDN) line, this parameter might be adjusted upward to avoid frequent automatic discovery of DCs in a trusted domain.
 # 

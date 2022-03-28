@@ -2,7 +2,7 @@
 #
 # This policy setting allows you to manage whether users can launch the report site problems dialog using a menu option.
 # 
-# If you enable this policy setting, a menu option won’t be available in Internet Explorer settings, or in the tools menu in the desktop. Users won’t be able to use it to launch the report site problems dialog box.
+# If you enable this policy setting, a menu option wont be available in Internet Explorer settings, or in the tools menu in the desktop. Users wont be able to use it to launch the report site problems dialog box.
 # 
 # If you disable or do not configure this policy setting, the menu options will be available.
 Turn off the ability to launch report site problems using a menu option:

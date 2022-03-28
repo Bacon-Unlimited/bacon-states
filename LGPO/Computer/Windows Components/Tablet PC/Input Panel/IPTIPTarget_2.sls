@@ -10,7 +10,7 @@
 # 
 # If you do not configure this policy, Input Panel will appear next to text entry areas in applications where this behavior is available. Users will be able to configure this setting on the Opening tab in Input Panel Options.
 # 
-# Caution: If you enable both the “Prevent Input Panel from appearing next to text entry areas” policy and the “Prevent Input Panel tab from appearing” policy, and disable the “Show Input Panel taskbar icon” policy, the user will then have no way to access Input Panel.
+# Caution: If you enable both the Prevent Input Panel from appearing next to text entry areas policy and the Prevent Input Panel tab from appearing policy, and disable the Show Input Panel taskbar icon policy, the user will then have no way to access Input Panel.
 "For tablet pen input, don\u2019t show the Input Panel icon":
   lgpo.set:
   - name: IPTIPTarget_2

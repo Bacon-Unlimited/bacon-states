@@ -6,11 +6,11 @@
 # 
 # If you choose to log off a user, the user cannot log on again except during permitted logon hours. If you choose to log off a user, the user might lose unsaved data.
 # 
-# If you enable this setting, the system will perform the action you specify when the user’s logon hours expire.
+# If you enable this setting, the system will perform the action you specify when the users logon hours expire.
 # 
-# If you disable or do not configure this setting, the system takes no action when the user’s logon hours expire. The user can continue the existing session, but cannot log on to a new session.
+# If you disable or do not configure this setting, the system takes no action when the users logon hours expire. The user can continue the existing session, but cannot log on to a new session.
 # 
-# Note: If you configure this setting, you might want to examine and appropriately configure the “Remove logon hours expiration warnings” setting
+# Note: If you configure this setting, you might want to examine and appropriately configure the Remove logon hours expiration warnings setting
 Set action to take when logon hours expire:
   lgpo.set:
   - name: LogonHoursPolicyDescription

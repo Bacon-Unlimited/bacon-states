@@ -1,7 +1,7 @@
 # windows:SUPPORTED_Windows_6_3
 #
 # 
-#         Enter “0” to disable Logon Script Delay.
+#         Enter 0 to disable Logon Script Delay.
 # 
 #         This policy setting allows you to configure how long the Group Policy client waits after logon before running scripts.
 # 

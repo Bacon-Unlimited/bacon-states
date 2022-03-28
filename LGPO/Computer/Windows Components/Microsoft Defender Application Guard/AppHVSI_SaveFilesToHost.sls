@@ -4,7 +4,7 @@
 # 
 # If you enable this setting, people can save downloaded files from the Microsoft Defender Application Guard container to the host operating system.
 # 
-# If you disable or don't configure this setting, people can't save downloaded files from the Microsoft Defender Application Guard container to the host operating system.
+# If you disable or don't configure this setting,people can't save downloaded files from the Microsoft Defender Application Guard container to the host operating system.
 #         
 Allow files to download and save to the host operating system from Microsoft Defender Application Guard:
   lgpo.set:

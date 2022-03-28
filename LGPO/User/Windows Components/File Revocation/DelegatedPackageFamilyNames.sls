@@ -9,7 +9,7 @@
 #  
 # If you disable or do not configure this policy setting, the only Windows Runtime applications that can revoke access to all enterprise-protected content on the device are Windows Mail and the user-selected mailto protocol handler app.  Any other Windows Runtime application will only be able to revoke access to content it protected.
 #  
-# Note: File revocation applies to all content protected under the same second level domain as the provided enterprise identifier. So, revoking an enterprise ID of mail.contoso.com will revoke the user’s access to all content protected under the contoso.com hierarchy.
+# Note: File revocation applies to all content protected under the same second level domain as the provided enterprise identifier. So, revoking an enterprise ID of mail.contoso.com will revoke the users access to all content protected under the contoso.com hierarchy.
 Allow Windows Runtime apps to revoke enterprise data:
   lgpo.set:
   - name: DelegatedPackageFamilyNames

@@ -6,7 +6,7 @@
 # 
 # If you enable this policy setting, you can enter a list of add-ons to be allowed or denied by Internet Explorer. For each entry that you add to the list, enter the following information:
 # 
-# Name of the Value - the CLSID (class identifier) for the add-on you wish to add to the list.  The CLSID should be in brackets for example, ‘{000000000-0000-0000-0000-0000000000000}'. The CLSID for an add-on can be obtained by reading the OBJECT tag from a Web page on which the add-on is referenced.
+# Name of the Value - the CLSID (class identifier) for the add-on you wish to add to the list.  The CLSID should be in brackets for example, {000000000-0000-0000-0000-0000000000000}'. The CLSID for an add-on can be obtained by reading the OBJECT tag from a Web page on which the add-on is referenced.
 # 
 # Value - A number indicating whether Internet Explorer should deny or allow the add-on to be loaded. To specify that an add-on should be denied enter a 0 (zero) into this field. To specify that an add-on should be allowed, enter a 1 (one) into this field. To specify that an add-on should be allowed and also permit the user to manage the add-on through Add-on Manager, enter a 2 (two) into this field.
 # 
