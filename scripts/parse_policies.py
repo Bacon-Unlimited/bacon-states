@@ -20,7 +20,7 @@ fmt = Formatter("%(levelname)s - %(asctime)s - %(message)s")
 
 sh = StreamHandler()
 sh.setFormatter(fmt)
-sh.setLevel(logging.INFO)
+sh.setLevel(logging.WARNING)
 
 fh = FileHandler("parse_policies.log")
 fh.setFormatter(fmt)
@@ -71,7 +71,7 @@ def _parse_admx_adml(
         categories = categories[0]
         categories = [child for child in categories if child.tag is not Comment]
     else:
-        log.warning(f"No categories found in {name + '.admx'}")
+        log.info(f"No categories found in {name + '.admx'}")
 
     resources = [
         child
@@ -405,12 +405,13 @@ def generate_sls(policies, output_dir):
 
                         for line in comment_help_split:
                             yaml_help += line + "\n"
-                        sls_file.write(yaml_help.encode("utf-8"))
+                        sls_file.write(yaml_help.encode("ascii", "ignore"))
                         sls_file.write(sls_contents)
 
 
 def generate_readme(
-    output_dir, base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo/LGPO"
+    output_dir,
+    base_uri="https://gitlab.twe.io/merix_studio/bacon-states/-/blob/lgpo/LGPO",
 ):
     walk = os.walk(output_dir)
     with open(os.path.join(output_dir, "README_LGPO_LIST.md"), "w") as readme:
