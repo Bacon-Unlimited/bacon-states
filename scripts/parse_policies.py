@@ -53,10 +53,22 @@ def _parse_admx_adml(
     Parse the admx/adml pair for a given filename (without extension)
     Returns (categories, string_table)
     """
-    admx_tree = etree.parse(
-        os.path.join(policy_path, name + ".admx"), parser=recovering_parser
-    )
-    admx_root = admx_tree.getroot()
+    try:
+        admx_tree = etree.parse(
+            os.path.join(policy_path, name + ".admx"), parser=recovering_parser
+        )
+    except XMLSyntaxError as e:
+        log.debug(f"{e} for {name}. Parsing as raw string...")
+        with open(
+            os.path.join(policy_path, name + ".admx"), encoding="utf-16"
+        ) as afile:
+            raw = afile.read()
+        raw_lines = raw.splitlines()
+        raw_lines = raw_lines[1:]
+        raw = "\n".join(raw_lines)
+        admx_root = etree.fromstring(raw)
+    else:
+        admx_root = admx_tree.getroot()
 
     adml_path = os.path.join(policy_path, adml_language, name + ".adml")
     adml_tree = etree.parse(adml_path, parser=recovering_parser)
@@ -103,9 +115,15 @@ def parse_policies(policy_path="C:\\Windows\\PolicyDefinitions", adml_language="
                 os.path.join(policy_path, admx_), parser=recovering_parser
             )
         except XMLSyntaxError as e:
-            log.error(f"{e} for {admx_}. Skipping...")
-            continue
-        admx_root = admx_tree.getroot()
+            log.warning(f"{e} for {admx_}. Parsing as raw string...")
+            with open(os.path.join(policy_path, admx_), encoding="utf-16") as afile:
+                raw = afile.read()
+            raw_lines = raw.splitlines()
+            raw_lines = raw_lines[1:]
+            raw = "\n".join(raw_lines)
+            admx_root = etree.fromstring(raw)
+        else:
+            admx_root = admx_tree.getroot()
 
         adml_path = os.path.join(
             policy_path, adml_language, os.path.splitext(admx_)[0] + ".adml"
