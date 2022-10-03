@@ -58,7 +58,7 @@ Restricts the UI language Windows uses for all logged users:
   - policy_class: Machine
 ```
 
-### NUMBERS IN ENUM -- FOR STATES LIKE "ComplianceDeadline.sls"
+### NUMBERS IN ENUM -- FOR STATES LIKE ["ComplianceDeadline.sls"](https://github.com/Bacon-Unlimited/bacon-states/blob/65f9ac37c2b7bba6dc30558c2454093112a53bfa/Windows/LGPO/Computer/Windows%20Components/Windows%20Update/ComplianceDeadline.sls)
 There are some LGPOs where an ENUM (list of values) contains only numbers
 In that case, the number must be wrapped in double quotes. 
 ```
