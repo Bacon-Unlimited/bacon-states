@@ -58,8 +58,39 @@ Restricts the UI language Windows uses for all logged users:
   - policy_class: Machine
 ```
 
+### NUMBERS IN ENUM -- FOR STATES LIKE "ComplianceDeadline.sls"
+There are some LGPOs where an ENUM (list of values) contains only numbers
+In that case, the number must be wrapped in double quotes. 
+```
+Specify deadlines for automatic updates and restarts:
+  lgpo.set:
+  - name: ComplianceDeadline
+  - setting:
+      ConfigureDeadlineForFeatureUpdates: enum-placeholder
+      ConfigureDeadlineForQualityUpdates: enum-placeholder
+      ConfigureDeadlineGracePeriod: enum-placeholder
+      ConfigureDeadlineGracePeriodForFeatureUpdates: enum-placeholder
+      ConfigureDeadlineNoAutoReboot: boolean-placeholder
+  - policy_class: Machine
+```
+
+... should be...
+```
+Specify deadlines for automatic updates and restarts:
+  lgpo.set:
+  - name: ComplianceDeadline
+  - setting:
+      ConfigureDeadlineForFeatureUpdates: "14"
+      ConfigureDeadlineForQualityUpdates: "14"
+      ConfigureDeadlineGracePeriod: "7"
+      ConfigureDeadlineGracePeriodForFeatureUpdates: "7"
+      ConfigureDeadlineNoAutoReboot: true
+  - policy_class: Machine
+```
+
 
 ## TEXT-PLACEHOLDER
+## BOOLEAN-PLACEHOLDER
 Some have placeholder type `text` and/or placeholder type `boolean`. The following example has both, e.g. `Control Panel/Personalization/CPL_Personalization_ForceDefaultLockScreen.sls`
 ```
 Force a specific default lock screen and logon image:
