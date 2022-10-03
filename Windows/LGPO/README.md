@@ -89,8 +89,7 @@ Specify deadlines for automatic updates and restarts:
 ```
 
 
-## TEXT-PLACEHOLDER
-## BOOLEAN-PLACEHOLDER
+## TEXT-PLACEHOLDER  &  BOOLEAN-PLACEHOLDER
 Some have placeholder type `text` and/or placeholder type `boolean`. The following example has both, e.g. `Control Panel/Personalization/CPL_Personalization_ForceDefaultLockScreen.sls`
 ```
 Force a specific default lock screen and logon image:
