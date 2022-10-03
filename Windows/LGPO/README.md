@@ -23,6 +23,8 @@ The policies,
 where applicable, contain "placeholders" for variables which should be filled in by
 the user who is applying the state. Examples for each placeholder type are shown below.
 
+
+## SETTING ENABLED
 Some policies don't have extra parameters, e.g. `Computer/Control Panel/Personalization/CPL_Personalization_NoChangingLockScreen.sls`
 ```
 Prevent changing lock screen and logon image:
@@ -34,6 +36,8 @@ Prevent changing lock screen and logon image:
 
 In this case, you may set `setting` equal to `Enabled`, `Disabled`, or `Not Configured`.
 
+
+## ENUM-PLACEHOLDER
 Some have paramters of type `enum`, e.g. `Computer/Control Panel/Regional and Language Options/LockMachineUILanguage.sls`
 ```
 Restricts the UI language Windows uses for all logged users:
@@ -54,6 +58,8 @@ Restricts the UI language Windows uses for all logged users:
   - policy_class: Machine
 ```
 
+
+## TEXT-PLACEHOLDER
 Some have placeholder type `text` and/or placeholder type `boolean`. The following example has both, e.g. `Control Panel/Personalization/CPL_Personalization_ForceDefaultLockScreen.sls`
 ```
 Force a specific default lock screen and logon image:
@@ -75,6 +81,8 @@ Force a specific default lock screen and logon image:
   - policy_class: Machine
 ```
 
+
+## DECIMAL-PLACEHOLDER
 Furthermore, some have placeholder type `decimal`, e.g. `Control Panel/Personalization/CPL_Personalization_StartBackground.sls`
 ```
 Force a specific Start background:
@@ -94,6 +102,8 @@ Force a specific Start background:
   - policy_class: Machine
 ```
 
+
+## ADDITIONAL
 Additionally, any policy with additional parameters can be `Disabled` or `Not Configured` by simply specifying such, without additional paramaters, e.g.
 ```
 Force a specific Start background:
