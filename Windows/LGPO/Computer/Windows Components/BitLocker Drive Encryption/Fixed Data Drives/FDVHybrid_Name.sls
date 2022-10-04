@@ -1,3 +1,20 @@
+####### HOW TO INFO ########
+## Read the doc here: https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md
+## View a BaconBit here about LGPO states: https://youtu.be/alAH75jGfdA
+##
+#### PLACEHOLDER DATA ####
+## - TEXT-PLACEHOLDER: Replace the <text-placeholder> with the appropriate value: "C:\Path\Bacon\File.jpg"
+## - BOOLEAN-PLACEHOLDER: Replace the <boolean-placeholder> with either: True or False
+## - DECIMAL-PLACEHOLDER: Replace the <decial-placeholder> with a number appropriate to LGPO requirements
+## - ENUM-PLACEHOLDER: Replace the <enum-placeholder> value from the list of values for the LGPO setting.
+##      -- View the LGPO Editor to find the available list of values.
+##      -- These will be in a drop-down box in the editor.
+##      -- If the text in the drop-down is only a number, then surround it in double-quotes. (https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md#numbers-in-enum----for-states-like-compliancedeadlinesls)
+#
+####### LGPO DETAILS ########
+# LOCATION: \Computer\Windows Components\BitLocker Drive Encryption\Fixed Data Drives\FDVHybrid_Name.sls
+#
+# SUPPORTED WINDOWS OS
 # windows:SUPPORTED_Windows7
 #
 # This policy setting configures whether or not fixed data drives formatted with the FAT file system can be unlocked and viewed on computers running Windows Server 2008, Windows Vista, Windows XP with Service Pack 3 (SP3), or Windows XP with Service Pack 2 (SP2) operating systems.

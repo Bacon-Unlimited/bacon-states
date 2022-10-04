@@ -1,3 +1,20 @@
+####### HOW TO INFO ########
+## Read the doc here: https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md
+## View a BaconBit here about LGPO states: https://youtu.be/alAH75jGfdA
+##
+#### PLACEHOLDER DATA ####
+## - TEXT-PLACEHOLDER: Replace the <text-placeholder> with the appropriate value: "C:\Path\Bacon\File.jpg"
+## - BOOLEAN-PLACEHOLDER: Replace the <boolean-placeholder> with either: True or False
+## - DECIMAL-PLACEHOLDER: Replace the <decial-placeholder> with a number appropriate to LGPO requirements
+## - ENUM-PLACEHOLDER: Replace the <enum-placeholder> value from the list of values for the LGPO setting.
+##      -- View the LGPO Editor to find the available list of values.
+##      -- These will be in a drop-down box in the editor.
+##      -- If the text in the drop-down is only a number, then surround it in double-quotes. (https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md#numbers-in-enum----for-states-like-compliancedeadlinesls)
+#
+####### LGPO DETAILS ########
+# LOCATION: \User\Windows Components\Remote Desktop Services\RemoteApp and Desktop Connections\TS_RADC_DefaultConnection.sls
+#
+# SUPPORTED WINDOWS OS
 # windows:SUPPORTED_Windows8
 #
 # This policy setting specifies the default connection URL for RemoteApp and Desktop Connections. The default connection URL is a specific connection that can only be configured by using Group Policy. In addition to the capabilities that are common to all connections, the default connection URL allows document file types to be associated with RemoteApp programs.

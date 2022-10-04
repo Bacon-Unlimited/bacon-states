@@ -1,3 +1,20 @@
+####### HOW TO INFO ########
+## Read the doc here: https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md
+## View a BaconBit here about LGPO states: https://youtu.be/alAH75jGfdA
+##
+#### PLACEHOLDER DATA ####
+## - TEXT-PLACEHOLDER: Replace the <text-placeholder> with the appropriate value: "C:\Path\Bacon\File.jpg"
+## - BOOLEAN-PLACEHOLDER: Replace the <boolean-placeholder> with either: True or False
+## - DECIMAL-PLACEHOLDER: Replace the <decial-placeholder> with a number appropriate to LGPO requirements
+## - ENUM-PLACEHOLDER: Replace the <enum-placeholder> value from the list of values for the LGPO setting.
+##      -- View the LGPO Editor to find the available list of values.
+##      -- These will be in a drop-down box in the editor.
+##      -- If the text in the drop-down is only a number, then surround it in double-quotes. (https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md#numbers-in-enum----for-states-like-compliancedeadlinesls)
+#
+####### LGPO DETAILS ########
+# LOCATION: \Computer\System\Display\DisplayPerProcessSystemDpiSettings.sls
+#
+# SUPPORTED WINDOWS OS
 # windows:SUPPORTED_Windows_10_0_RS4
 #
 # Per Process System DPI is an application compatibility feature for desktop applications that do not render properly after a display-scale factor (DPI) change. When the display scale factor of the primary display changes (which can happen when you connect or disconnect a display that has a different display scale factor (DPI), connect remotely from a device with a different display scale factor, or manually change the display scale factor), many desktop applications can display blurry. Desktop applications that have not been updated to display properly in this scenario will be blurry until the user logs out and back in to Windows. 

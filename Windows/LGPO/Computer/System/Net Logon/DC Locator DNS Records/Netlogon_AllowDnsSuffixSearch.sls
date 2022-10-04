@@ -1,3 +1,20 @@
+####### HOW TO INFO ########
+## Read the doc here: https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md
+## View a BaconBit here about LGPO states: https://youtu.be/alAH75jGfdA
+##
+#### PLACEHOLDER DATA ####
+## - TEXT-PLACEHOLDER: Replace the <text-placeholder> with the appropriate value: "C:\Path\Bacon\File.jpg"
+## - BOOLEAN-PLACEHOLDER: Replace the <boolean-placeholder> with either: True or False
+## - DECIMAL-PLACEHOLDER: Replace the <decial-placeholder> with a number appropriate to LGPO requirements
+## - ENUM-PLACEHOLDER: Replace the <enum-placeholder> value from the list of values for the LGPO setting.
+##      -- View the LGPO Editor to find the available list of values.
+##      -- These will be in a drop-down box in the editor.
+##      -- If the text in the drop-down is only a number, then surround it in double-quotes. (https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md#numbers-in-enum----for-states-like-compliancedeadlinesls)
+#
+####### LGPO DETAILS ########
+# LOCATION: \Computer\System\Net Logon\DC Locator DNS Records\Netlogon_AllowDnsSuffixSearch.sls
+#
+# SUPPORTED WINDOWS OS
 # windows:SUPPORTED_Windows_6_3_NOARM
 #
 # This policy setting specifies whether the computers to which this setting is applied attemps DNS name resolution of single-lablel domain names, by appending different registered DNS suffixes, and uses NetBIOS name resolution only if DNS name resolution fails. This policy, including the specified default behavior, is not used if the AllowSingleLabelDnsDomain policy setting is enabled.

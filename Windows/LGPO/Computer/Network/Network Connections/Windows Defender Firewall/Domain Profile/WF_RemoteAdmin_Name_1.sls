@@ -1,3 +1,20 @@
+####### HOW TO INFO ########
+## Read the doc here: https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md
+## View a BaconBit here about LGPO states: https://youtu.be/alAH75jGfdA
+##
+#### PLACEHOLDER DATA ####
+## - TEXT-PLACEHOLDER: Replace the <text-placeholder> with the appropriate value: "C:\Path\Bacon\File.jpg"
+## - BOOLEAN-PLACEHOLDER: Replace the <boolean-placeholder> with either: True or False
+## - DECIMAL-PLACEHOLDER: Replace the <decial-placeholder> with a number appropriate to LGPO requirements
+## - ENUM-PLACEHOLDER: Replace the <enum-placeholder> value from the list of values for the LGPO setting.
+##      -- View the LGPO Editor to find the available list of values.
+##      -- These will be in a drop-down box in the editor.
+##      -- If the text in the drop-down is only a number, then surround it in double-quotes. (https://github.com/Bacon-Unlimited/bacon-states/blob/public/Windows/LGPO/README.md#numbers-in-enum----for-states-like-compliancedeadlinesls)
+#
+####### LGPO DETAILS ########
+# LOCATION: \Computer\Network\Network Connections\Windows Defender Firewall\Domain Profile\WF_RemoteAdmin_Name_1.sls
+#
+# SUPPORTED WINDOWS OS
 # windows:SUPPORTED_WindowsXPSP2
 #
 # Allows remote administration of this computer using administrative tools such as the Microsoft Management Console (MMC) and Windows Management Instrumentation (WMI). To do this, Windows Defender Firewall opens TCP ports 135 and 445. Services typically use these ports to communicate using remote procedure calls (RPC) and Distributed Component Object Model (DCOM). Additionally, on Windows XP Professional with at least SP2 and Windows Server 2003 with at least SP1, this policy setting also allows SVCHOST.EXE and LSASS.EXE to receive unsolicited incoming messages and allows hosted services to open additional dynamically-assigned ports, typically in the range of 1024 to 1034.  On Windows Vista, this policy setting does not control connections to SVCHOST.EXE and LSASS.EXE.
